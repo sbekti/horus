@@ -1,11 +1,27 @@
 {
   "name": "horus",
   "version": "1.0.0",
-  "description": "Horus Geolocator Services",
+  "description": "Bekti Geolocator Services",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sbekti/horus.git"
+  },
   "author": "Samudra Harapan Bekti",
-  "license": "MIT"
+  "license": "MIT",
+  "engines": {
+    "node": "^0.12.5",
+    "npm": "^2.12.0"
+  },
+  "dependencies": {
+    "express": "^4.13.0",
+    "http": "0.0.0",
+    "jade": "^1.11.0",
+    "path": "^0.11.14",
+    "socket.io": "^1.3.5"
+  }
 }

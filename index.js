@@ -17,8 +17,8 @@ app.get('/', function(req, res) {
 });
 
 io.on('connection', function (socket) {
-  socket.on('coords', function (data) {
-    io.emit('coords', data);
+  socket.on('update', function (data) {
+    io.emit('update', data);
   });
 });
 

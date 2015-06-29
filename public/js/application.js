@@ -1,215 +1,198 @@
+var adjectives = new Array(
+  'accurate', 'abundant', 'addicted', 'adorable', 'adventurous', 'afraid', 'aggressive', 'agreeable', 'alcoholic', 'alert',
+  'aloof', 'ambitious', 'amused', 'ancient', 'angry', 'animated', 'annoyed', 'annoying', 'anxious', 'arrogant', 'ashamed',
+  'attractive', 'auspicious', 'average', 'awesome', 'awful', 'bad', 'bashful', 'beautiful', 'belligerent', 'beneficial', 'best',
+  'better', 'big', 'bitter', 'bizarre', 'black', 'blue', 'boiling', 'boring', 'brainy', 'brave', 'breezy', 'brief', 'bright',
+  'broad', 'broken', 'bumpy', 'busy', 'calm', 'capable', 'careful', 'careless', 'caring', 'cautious', 'charming', 'cheap',
+  'cheerful', 'chilly', 'chubby', 'clean', 'clever', 'clumsy', 'cold', 'colorful', 'colossal', 'combative', 'comfortable',
+  'concerned', 'confused', 'cooing', 'cool', 'cooperative', 'courageous', 'crazy', 'creepy', 'crowded', 'cruel', 'cuddly',
+  'curious', 'curly', 'curved', 'cute', 'damaged', 'damp', 'dangerous', 'dark', 'deafening', 'deep', 'defeated', 'defective',
+  'defiant', 'delicate', 'delicious', 'delightful', 'depressed', 'determined', 'different', 'dirty', 'disgusted', 'disgusting',
+  'disturbed', 'dizzy', 'dry', 'dull', 'dusty', 'eager', 'early', 'educated', 'efficient', 'elated', 'elderly', 'elegant',
+  'embarrassed', 'empty', 'encouraging', 'energetic', 'enthusiastic', 'envious', 'evil', 'excellent', 'excited', 'exciting',
+  'expensive', 'exuberant', 'fabulous', 'faint', 'fair', 'faithful', 'famous', 'fancy', 'fantastic', 'fast', 'fat', 'fearful',
+  'fearless', 'fertile', 'few', 'fierce', 'filthy', 'fine', 'flaky', 'flat', 'fluffy', 'foolish', 'forgetful', 'frail', 'frantic',
+  'fresh', 'friendly', 'frightened', 'funny', 'fuzzy', 'gentle', 'giant', 'gigantic', 'glamorous', 'glorious', 'good', 'gorgeous',
+  'graceful', 'grateful', 'greasy', 'great', 'greedy', 'green', 'grieving', 'grubby', 'grumpy', 'handsome', 'happy', 'hard', 'harsh',
+  'healthy', 'heavy', 'helpful', 'helpless', 'high', 'hilarious', 'hissing', 'historical', 'hollow', 'homeless', 'horrible', 'hot',
+  'huge', 'humorous', 'hungry', 'hurt', 'hushed', 'husky', 'icy', 'ignorant', 'ill', 'illegal', 'imaginary', 'immense', 'impolite',
+  'important', 'impossible', 'innocent', 'intelligent', 'interesting', 'itchy', 'jealous', 'jittery', 'jolly', 'juicy', 'juvenile',
+  'kind', 'large', 'late', 'lazy', 'legal', 'light', 'literate', 'little', 'lively', 'lonely', 'long', 'loose', 'loud', 'lovely',
+  'low', 'lucky', 'macho', 'magical', 'magnificent', 'many', 'massive', 'mature', 'mean', 'melodic', 'melted', 'messy', 'mighty',
+  'miniature', 'moaning', 'modern', 'mute', 'mysterious', 'narrow', 'nasty', 'naughty', 'nervous', 'new', 'nice', 'noisy', 'nosy',
+  'numerous', 'nutritious', 'nutty', 'obedient', 'obese', 'obnoxious', 'odd', 'old', 'orange', 'ordinary', 'outrageous',
+  'overconfident', 'panicky', 'peaceful', 'perfect', 'petite', 'pink', 'plastic', 'pleasant', 'polite', 'poor', 'powerful',
+  'precious', 'pretty', 'prickly', 'proud', 'puny', 'purple', 'purring', 'quaint', 'quick', 'quickest', 'quiet', 'rainy',
+  'rapid', 'rare', 'raspy', 'ratty', 'red', 'relieved', 'remarkable', 'repulsive', 'resonant', 'responsible', 'rich', 'ripe',
+  'roasted', 'robust', 'romantic', 'rotten', 'rough', 'round', 'royal', 'rude', 'sad', 'salty', 'scary', 'scattered', 'scintillating',
+  'scrawny', 'screeching', 'secretive', 'selfish', 'serious', 'shaggy', 'shaky', 'shallow', 'sharp', 'shiny', 'shivering', 'shocking',
+  'short', 'shrill', 'shy', 'silent', 'silky', 'silly', 'sincere', 'skinny', 'slim', 'slimy', 'slippery', 'slow', 'small', 'smiling',
+  'smooth', 'soft', 'solid', 'sore', 'sour', 'spicy', 'spiritual', 'splendid', 'spotty', 'square', 'squealing', 'stale', 'steady',
+  'steep', 'sticky', 'stingy', 'straight', 'strange', 'striped', 'strong', 'successful', 'sweet', 'swift', 'talented', 'tall', 'tame',
+  'tan', 'tart', 'tasteless', 'tasty', 'tender', 'tense', 'terrible', 'terrific', 'testy', 'thick', 'thin', 'thirsty', 'thoughtful',
+  'thoughtless', 'thundering', 'tight', 'tiny', 'tired', 'tough', 'tricky', 'troubled', 'ugliest', 'ugly', 'uneven', 'unique',
+  'untidy', 'upset', 'uptight', 'vast', 'victorious', 'violent', 'vivacious', 'voiceless', 'vulgar', 'warm', 'wasteful', 'watery',
+  'weak', 'wealthy', 'weary', 'wet', 'whispering', 'wicked', 'wide', 'wide-eyed', 'wise', 'witty', 'wonderful', 'wooden', 'worried',
+  'yellow', 'young', 'youthful', 'yummy', 'zany', 'zealous'
+);
+
+var animals = new Array(
+  'aardvark', 'alligator', 'anteater', 'antelope', 'ape', 'armadillo', 'ass', 'baboon', 'badger', 'bat', 'bear', 'beaver',
+  'bighorn', 'bison', 'boar', 'buffalo', 'bull', 'bunny', 'camel', 'canary', 'cat', 'chameleon', 'cheetah', 'chimpanzee',
+  'chinchilla', 'chipmunk', 'colt', 'cougar', 'cow', 'coyote', 'crocodile', 'crow', 'deer', 'dingo', 'doe', 'dog', 'donkey',
+  'dormouse', 'duckbill', 'elephant', 'elk', 'fawn', 'ferret', 'fish', 'fox', 'frog', 'gazelle', 'giraffe', 'goat', 'gopher',
+  'gorilla', 'grizzly bear', 'ground hog', 'guinea pig', 'hamster', 'hare', 'hedgehog', 'hippopotamus', 'hog', 'horse', 'hyena',
+  'iguana', 'jackal', 'jaguar', 'kangaroo', 'kitten', 'koala', 'lamb', 'lemur', 'leopard', 'lion', 'lizard', 'llama', 'lovebird',
+  'mink', 'mole', 'mongoose', 'monkey', 'moose', 'mouse', 'mule', 'muskrat', 'newt', 'ocelot', 'opossum', 'orangutan', 'otter', 'ox',
+  'panda', 'panther', 'parrot', 'pig', 'platypus', 'polar bear', 'pony', 'porcupine', 'prairie dog', 'puma', 'puppy', 'rabbit',
+  'raccoon', 'ram', 'rat', 'reindeer', 'rhinoceros', 'roebuck', 'salamander', 'seal', 'sheep', 'shrew', 'silver fox', 'skunk',
+  'sloth', 'snake', 'squirrel', 'stallion', 'tiger', 'toad', 'turtle', 'walrus', 'warthog', 'waterbuck', 'weasel', 'whale',
+  'wildcat', 'wolf', 'wombat', 'yak', 'yetti', 'zebra'
+);
+
+function getRandomName() {
+  var adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
+  var animal = animals[Math.floor(Math.random() * animals.length)];
+
+  return (adjective + ' ' + animal).split(' ').join('-');
+}
+
+function showAlert(message) {
+  $('#alert').html(message);
+  $('#alert').slideDown();
+}
+
+function dismissAlert() {
+  $('#alert').slideUp();
+}
+
 var socket = io();
-var map;
-var userMarker;
-var userCircle;
-var markers = {};
-var circles = {};
-var infoWindow = new google.maps.InfoWindow();
-var uid = Math.random().toString(16).substring(2, 15);
-var firstLock = true;
-var centerControlDiv;
-
-function CenterControl(marker, controlDiv, map) {
-  var existingElement = document.getElementById(marker.uid);
-
-  if (existingElement) {
-    return;
-  }
-
-  controlDiv.style.clear = 'both';
-
-  var controlUI = document.createElement('div');
-  controlUI.id = marker.uid;
-  controlUI.style.backgroundColor = '#fff';
-  controlUI.style.border = '2px solid #fff';
-  controlUI.style.borderRadius = '3px';
-  controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
-  controlUI.style.cursor = 'pointer';
-  controlUI.style.float = 'left';
-  controlUI.style.marginBottom = '22px';
-  controlUI.style.textAlign = 'center';
-  controlUI.title = 'Go to this location';
-  controlDiv.appendChild(controlUI);
-
-  var controlText = document.createElement('div');
-  controlText.style.color = 'rgb(25,25,25)';
-  controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
-  controlText.style.fontSize = '16px';
-  controlText.style.lineHeight = '38px';
-  controlText.style.paddingLeft = '5px';
-  controlText.style.paddingRight = '5px';
-  controlText.innerHTML = marker.title;
-  controlUI.appendChild(controlText);
-
-  google.maps.event.addDomListener(controlUI, 'click', function() {
-    map.setCenter(marker.getPosition());
-    map.setZoom(18);
-  });
-}
-
-setInterval(function() {
-  updateCoordinates();
-}, 5000);
-
-setInterval(function() {
-  var now = new Date().getTime();
-
-  for (var uid in markers) {
-    if (now - markers[uid].timestamp > 30000) {
-      var marker = markers[uid];
-      marker.setMap(null);
-      marker = null;
-      delete markers[uid];
-
-      var circle = circles[uid];
-      circle.setMap(null);
-      circle = null;
-      delete circles[uid];
-
-      var controlElement = document.getElementById(uid);
-      google.maps.event.clearListeners(controlElement, 'click');
-      controlElement.parentNode.removeChild(controlElement);
-    }
-  }
-}, 15000);
-
-socket.on('coords', function(data) {
-  if (data.uid != uid) {
-    if (markers[data.uid] != undefined) {
-      var marker = markers[data.uid];
-      marker.setMap(null);
-      marker = null;
-      delete markers[data.uid];
-    }
-
-    if (circles[data.uid] != undefined) {
-      var circle = circles[data.uid];
-      circle.setMap(null);
-      circle = null;
-      delete circles[data.uid];
-    }
-
-    var marker = new google.maps.Marker({
-      uid: data.uid,
-      position: new google.maps.LatLng(data.lat, data.lng),
-      map: map,
-      title: data.uid,
-      accuracy: data.accuracy,
-      timestamp: data.timestamp
-    });
-
-    var circle = new google.maps.Circle({
-      center: new google.maps.LatLng(data.lat, data.lng),
-      map: map,
-      radius: data.accuracy
-    });
-
-    google.maps.event.addListener(marker, 'click', function() {
-      map.setCenter(marker.getPosition());
-      updateInfoWindow(marker);
-      infoWindow.open(map, marker);
-    });
-
-    google.maps.event.addListener(marker, 'dblclick', function() {
-      map.setZoom(18);
-      map.setCenter(marker.getPosition());
-      updateInfoWindow(marker);
-      infoWindow.open(map, marker);
-    });
-
-    markers[data.uid] = marker;
-    circles[data.uid] = circle;
-
-    console.log('dapet')
-    var centerControl = new CenterControl(marker, centerControlDiv, map);
-  }
-});
-
-function updateInfoWindow(marker) {
-  infoWindow.setContent('<strong>' + marker.title + '</strong><br>Accuracy: ' + marker.accuracy + 'm');
-}
+var username;
+var users = {};
+var isFirstLock = true;
 
 function initialize() {
-  map = new google.maps.Map(document.getElementById('map-canvas'), {
-    zoom: 2,
-    center: new google.maps.LatLng(0, 0)
+  map = L.map('map').setView([51.505, -0.09], 2);
+
+  L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
+
+  map.on('locationfound', onLocationFound);
+  map.on('locationerror', onLocationError);
+
+  var legend = L.control({
+    position: 'bottomright'
   });
 
-  userMarker = new google.maps.Marker({
-    uid: uid,
-    map: map,
-    title: 'My position'
-  });
-
-  userCircle = new google.maps.Circle({
-    map: map
-  });
-
-  google.maps.event.addListener(userMarker, 'click', function() {
-    map.setCenter(userMarker.getPosition());
-    updateInfoWindow(userMarker);
-    infoWindow.open(map, userMarker);
-  });
-
-  google.maps.event.addListener(userMarker, 'dblclick', function() {
-    map.setZoom(18);
-    map.setCenter(userMarker.getPosition());
-    updateInfoWindow(userMarker);
-    infoWindow.open(map, userMarker);
-  });
-
-  centerControlDiv = document.createElement('div');
-  centerControlDiv.index = 1;
-  map.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(centerControlDiv);
-
-  updateCoordinates();
-}
-
-google.maps.event.addDomListener(window, 'load', initialize);
-
-function updateCoordinates() {
-  if (navigator.geolocation) {
-    var options = {
-      enableHighAccuracy: true,
-      timeout: 10000,
-      maximumAge: 30000
-    };
-
-    navigator.geolocation.getCurrentPosition(successCallback, errorCallback, options);
-  } else {
-    alert("Yikes!! Please upgrade your dinasaur browser.");
-  }
-}
-
-function successCallback(pos) {
-  var now = new Date().getTime();
-
-  var data = {
-    uid: uid,
-    timestamp: now,
-    lat: pos.coords.latitude,
-    lng: pos.coords.longitude,
-    accuracy: pos.coords.accuracy
+  legend.onAdd = function(map) {
+    var div = L.DomUtil.create('div', 'legend-controls');
+    return div;
   };
 
-  socket.emit('coords', data);
+  legend.addTo(map);
+  var legendControls = $('.legend-controls');
+  var dropup = $('#dropup-tracking').detach().appendTo(legendControls);
+  legendControls.first().dblclick(L.DomEvent.stopPropagation);
+  legendControls.first().mousedown(L.DomEvent.stopPropagation);
 
-  var latlng = new google.maps.LatLng(data.lat, data.lng);
-  userMarker.setPosition(latlng);
-  userMarker.accuracy = data.accuracy;
-  userCircle.setCenter(latlng);
-  userCircle.setRadius(data.accuracy);
+  // Webkit text input hack
+  $('input:text').mouseup(function(e) {
+    return false;
+  });
 
-  var centerControl = new CenterControl(userMarker, centerControlDiv, map);
+  // Pre-populate username
+  $('#input-username').val(getRandomName());
 
-  if (firstLock) {
-    map.setCenter(userMarker.getPosition());
-    updateInfoWindow(userMarker);
-    infoWindow.open(map, userMarker);
-    firstLock = false;
+  $('#form-signup').submit(function(e) {
+    signup();
+    e.preventDefault();
+  });
+
+  $('#btn-start').click(function() {
+    signup();
+  });
+
+  // Select input text on focus
+  $('#signup').on('shown.bs.modal', function() {
+    $('#input-username').focus(function() {
+      $(this).select();
+    });
+  })
+
+  $('#signup').modal({
+    backdrop: 'static',
+    keyboard: false
+  });
+}
+
+function signup() {
+  var input = $('#input-username').val();
+
+  if (!input || !input.length) {
+
+  } else {
+    username = input;
+    updateLocation();
+    $('#signup').modal('hide');
   }
 }
 
-function errorCallback(err) {
-  console.log(err);
+function updateLocation() {
+  showAlert('Getting location...');
+
+  map.locate({
+    setView: isFirstLock,
+    maxZoom: 16
+  });
 }
+
+function onLocationFound(e) {
+  dismissAlert();
+
+  var data = {
+    username: username,
+    timestamp: e.timestamp,
+    latitude: e.latitude,
+    longitude: e.longitude,
+    altitude: e.altitude,
+    accuracy: e.accuracy,
+    altitudeAccuracy: e.altitudeAccuracy
+  }
+
+  socket.emit('update', data);
+  isFirstLock = false;
+
+  setTimeout(function() {
+    updateLocation();
+  }, 10000);
+}
+
+function onLocationError(e) {
+  showAlert(e.message);
+}
+
+socket.on('update', function(data) {
+  if (!users[data.username]) {
+    users[data.username] = {};
+    $('#dropup-tracking ul').append('<li><a href="#!/' + data.username + '">' + data.username + '</a></li>');
+  } else {
+    var existingMarker = users[data.username].marker;
+    map.removeLayer(existingMarker);
+  }
+
+  var marker = L.marker([data.latitude, data.longitude]).addTo(map);
+  marker.bindPopup(data.username);
+
+  users[data.username].data = data;
+  users[data.username].marker = marker;
+});
+
+function processLocationHash() {
+
+}
+
+(function() {
+  window.onhashchange = processLocationHash;
+  initialize();
+})();

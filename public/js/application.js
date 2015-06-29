@@ -7,6 +7,45 @@ var circles = {};
 var infoWindow = new google.maps.InfoWindow();
 var uid = Math.random().toString(16).substring(2, 15);
 var firstLock = true;
+var centerControlDiv;
+
+function CenterControl(marker, controlDiv, map) {
+  var existingElement = document.getElementById(marker.uid);
+
+  if (existingElement) {
+    return;
+  }
+
+  controlDiv.style.clear = 'both';
+
+  var controlUI = document.createElement('div');
+  controlUI.id = marker.uid;
+  controlUI.style.backgroundColor = '#fff';
+  controlUI.style.border = '2px solid #fff';
+  controlUI.style.borderRadius = '3px';
+  controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+  controlUI.style.cursor = 'pointer';
+  controlUI.style.float = 'left';
+  controlUI.style.marginBottom = '22px';
+  controlUI.style.textAlign = 'center';
+  controlUI.title = 'Go to this location';
+  controlDiv.appendChild(controlUI);
+
+  var controlText = document.createElement('div');
+  controlText.style.color = 'rgb(25,25,25)';
+  controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
+  controlText.style.fontSize = '16px';
+  controlText.style.lineHeight = '38px';
+  controlText.style.paddingLeft = '5px';
+  controlText.style.paddingRight = '5px';
+  controlText.innerHTML = marker.title;
+  controlUI.appendChild(controlText);
+
+  google.maps.event.addDomListener(controlUI, 'click', function() {
+    map.setCenter(marker.getPosition());
+    map.setZoom(18);
+  });
+}
 
 setInterval(function() {
   updateCoordinates();
@@ -26,6 +65,10 @@ setInterval(function() {
       circle.setMap(null);
       circle = null;
       delete circles[uid];
+
+      var controlElement = document.getElementById(uid);
+      google.maps.event.clearListeners(controlElement, 'click');
+      controlElement.parentNode.removeChild(controlElement);
     }
   }
 }, 15000);
@@ -47,6 +90,7 @@ socket.on('coords', function(data) {
     }
 
     var marker = new google.maps.Marker({
+      uid: data.uid,
       position: new google.maps.LatLng(data.lat, data.lng),
       map: map,
       title: data.uid,
@@ -75,6 +119,9 @@ socket.on('coords', function(data) {
 
     markers[data.uid] = marker;
     circles[data.uid] = circle;
+
+    console.log('dapet')
+    var centerControl = new CenterControl(marker, centerControlDiv, map);
   }
 });
 
@@ -89,8 +136,9 @@ function initialize() {
   });
 
   userMarker = new google.maps.Marker({
+    uid: uid,
     map: map,
-    title: 'My position',
+    title: 'My position'
   });
 
   userCircle = new google.maps.Circle({
@@ -109,6 +157,10 @@ function initialize() {
     updateInfoWindow(userMarker);
     infoWindow.open(map, userMarker);
   });
+
+  centerControlDiv = document.createElement('div');
+  centerControlDiv.index = 1;
+  map.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(centerControlDiv);
 
   updateCoordinates();
 }
@@ -147,6 +199,8 @@ function successCallback(pos) {
   userMarker.accuracy = data.accuracy;
   userCircle.setCenter(latlng);
   userCircle.setRadius(data.accuracy);
+
+  var centerControl = new CenterControl(userMarker, centerControlDiv, map);
 
   if (firstLock) {
     map.setCenter(userMarker.getPosition());

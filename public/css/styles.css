@@ -5,6 +5,10 @@ body {
 html, body, #map {
   height: 100%;
 }
+span.marker-title {
+  font-weight: bold;
+  font-size: 18px;
+}
 #alert {
   display: none;
   position: absolute;

@@ -143,8 +143,6 @@ function signup() {
 }
 
 function updateLocation() {
-  showAlert('Getting location...');
-
   map.locate({
     setView: isFirstLock,
     maxZoom: 16
@@ -174,6 +172,11 @@ function onLocationError(e) {
   showAlert(e.message);
 }
 
+function bindPopup(marker, data) {
+  var html = '<span class="marker-title">' + data.username + '</span><br>LatLng: [' + data.latitude + ', ' + data.longitude + ']<br>Accuracy: ' + data.accuracy + ' m<br>Last updated: ' + $.timeago(data.timestamp);
+  marker.bindPopup(html);
+}
+
 socket.on('update', function(data) {
   var latlng = L.latLng(data.latitude, data.longitude);
   var radius = data.accuracy / 2;
@@ -182,7 +185,7 @@ socket.on('update', function(data) {
     users[data.username] = {};
 
     var marker = L.marker(latlng).addTo(map);
-    marker.bindPopup(data.username);
+    bindPopup(marker, data);
     users[data.username].marker = marker;
 
     var circle = L.circle(latlng, radius).addTo(map);
@@ -196,6 +199,7 @@ socket.on('update', function(data) {
   } else {
     var existingMarker = users[data.username].marker;
     existingMarker.setLatLng(latlng);
+    bindPopup(existingMarker, data);
 
     var existingCircle = users[data.username].circle;
     existingCircle.setLatLng(latlng);
@@ -219,7 +223,6 @@ function cleanUpMarkers() {
 
       delete users[uid];
       $('#li-' + uid).remove();
-      console.log(users);
 
       showAlert(uid + ' has left.');
     }
@@ -231,8 +234,10 @@ function processLocationHash() {
   var user = users[uid];
 
   if (user) {
-    var latlng = user.marker.getLatLng();
+    var marker = user.marker;
+    var latlng = marker.getLatLng();
     map.setView(latlng, 16);
+    marker.openPopup();
   }
 }
 

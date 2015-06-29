@@ -6,6 +6,7 @@ var markers = {};
 var circles = {};
 var infoWindow = new google.maps.InfoWindow();
 var uid = Math.random().toString(16).substring(2, 15);
+var firstLock = true;
 
 setInterval(function() {
   updateCoordinates();
@@ -60,6 +61,12 @@ socket.on('coords', function(data) {
     });
 
     google.maps.event.addListener(marker, 'click', function() {
+      map.setCenter(marker.getPosition());
+      updateInfoWindow(marker);
+      infoWindow.open(map, marker);
+    });
+
+    google.maps.event.addListener(marker, 'dblclick', function() {
       map.setZoom(18);
       map.setCenter(marker.getPosition());
       updateInfoWindow(marker);
@@ -91,6 +98,12 @@ function initialize() {
   });
 
   google.maps.event.addListener(userMarker, 'click', function() {
+    map.setCenter(userMarker.getPosition());
+    updateInfoWindow(userMarker);
+    infoWindow.open(map, userMarker);
+  });
+
+  google.maps.event.addListener(userMarker, 'dblclick', function() {
     map.setZoom(18);
     map.setCenter(userMarker.getPosition());
     updateInfoWindow(userMarker);
@@ -134,6 +147,13 @@ function successCallback(pos) {
   userMarker.accuracy = data.accuracy;
   userCircle.setCenter(latlng);
   userCircle.setRadius(data.accuracy);
+
+  if (firstLock) {
+    map.setCenter(userMarker.getPosition());
+    updateInfoWindow(userMarker);
+    infoWindow.open(map, userMarker);
+    firstLock = false;
+  }
 }
 
 function errorCallback(err) {

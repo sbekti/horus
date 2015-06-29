@@ -4,7 +4,7 @@ html
     meta(charset='utf-8')
     meta(name='author', content='Samudra Harapan Bekti')
     meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0')
-    title Real-Time Geolocation with Web Sockets
+    title Bekti Geolocation Services
     link(rel='stylesheet', href='//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css')
     link(rel='stylesheet', href='//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css')
     link(rel='stylesheet', href='./css/styles.css')
@@ -14,8 +14,11 @@ html
       .modal-dialog(role='document')
         .modal-content
           .modal-header
-            h4#myModalLabel.modal-title Bekti Geolocation Services
+            h4#myModalLabel.modal-title
+              img(src='/img/hiero_D10.png', height=24)
+              |   Bekti Geolocation Services
           .modal-body
+            p You will need to enable geolocation feature on your browser to be able to share your location with other users.
             p To help the others identify you on the map, please provide a unique name.
             form#form-signup(data-toggle='validator', role='form')
               .input-group

@@ -60,6 +60,9 @@ function getRandomName() {
 function showAlert(message) {
   $('#alert').html(message);
   $('#alert').slideDown();
+
+  clearTimeout(alertTimer);
+  alertTimer = setTimeout(dismissAlert, 5000);
 }
 
 function dismissAlert() {
@@ -70,6 +73,7 @@ var socket = io();
 var username;
 var users = {};
 var isFirstLock = true;
+var alertTimer;
 
 function initialize() {
   map = L.map('map').setView([51.505, -0.09], 2);
@@ -148,8 +152,6 @@ function updateLocation() {
 }
 
 function onLocationFound(e) {
-  dismissAlert();
-
   var data = {
     username: username,
     timestamp: e.timestamp,
@@ -173,26 +175,69 @@ function onLocationError(e) {
 }
 
 socket.on('update', function(data) {
+  var latlng = L.latLng(data.latitude, data.longitude);
+  var radius = data.accuracy / 2;
+
   if (!users[data.username]) {
     users[data.username] = {};
-    $('#dropup-tracking ul').append('<li><a href="#!/' + data.username + '">' + data.username + '</a></li>');
+
+    var marker = L.marker(latlng).addTo(map);
+    marker.bindPopup(data.username);
+    users[data.username].marker = marker;
+
+    var circle = L.circle(latlng, radius).addTo(map);
+    users[data.username].circle = circle;
+
+    $('#dropup-tracking ul').append('<li id="li-' + data.username + '"><a href="#!/' + data.username + '">' + data.username + '</a></li>');
+
+    if (data.username != username) {
+      showAlert(data.username + ' has joined.');
+    }
   } else {
     var existingMarker = users[data.username].marker;
-    map.removeLayer(existingMarker);
+    existingMarker.setLatLng(latlng);
+
+    var existingCircle = users[data.username].circle;
+    existingCircle.setLatLng(latlng);
+    existingCircle.setRadius(radius);
   }
 
-  var marker = L.marker([data.latitude, data.longitude]).addTo(map);
-  marker.bindPopup(data.username);
-
   users[data.username].data = data;
-  users[data.username].marker = marker;
+  users[data.username].timestamp = new Date().getTime();
 });
 
-function processLocationHash() {
+function cleanUpMarkers() {
+  var now = new Date().getTime();
 
+  for (var uid in users) {
+    if (now - users[uid].timestamp > 30000) {
+      var marker = users[uid].marker;
+      var circle = users[uid].circle;
+
+      map.removeLayer(marker);
+      map.removeLayer(circle);
+
+      delete users[uid];
+      $('#li-' + uid).remove();
+      console.log(users);
+
+      showAlert(uid + ' has left.');
+    }
+  }
+}
+
+function processLocationHash() {
+  var uid = window.location.hash.split('/')[1];
+  var user = users[uid];
+
+  if (user) {
+    var latlng = user.marker.getLatLng();
+    map.setView(latlng, 16);
+  }
 }
 
 (function() {
   window.onhashchange = processLocationHash;
+  setInterval(cleanUpMarkers, 15000);
   initialize();
 })();

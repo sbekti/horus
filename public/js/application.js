@@ -184,6 +184,12 @@ socket.on('update', function(data) {
     users[data.username] = {};
 
     var marker = L.marker(latlng).addTo(map);
+    marker.on('click', function(e) {
+        map.panTo(e.getLatLng());
+    });
+    marker.on('dblclick', function(e) {
+        map.setView(e.getLatLng(), 16);
+    });
     bindPopup(marker, data);
     users[data.username].marker = marker;
 

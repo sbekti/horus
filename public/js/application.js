@@ -85,6 +85,11 @@ function initialize() {
   map.on('locationfound', onLocationFound);
   map.on('locationerror', onLocationError);
 
+  map.on('click', function(e) {
+    map.setView(e.latlng, 16);
+    window.location.hash = '#!/';
+  });
+
   var legend = L.control({
     position: 'bottomright'
   });

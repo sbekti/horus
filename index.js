@@ -16,9 +16,9 @@ app.get('/', function(req, res) {
   res.render('index');
 });
 
-io.sockets.on('connection', function (socket) {
-  socket.on('send:coords', function (data) {
-    socket.broadcast.emit('load:coords', data);
+io.on('connection', function (socket) {
+  socket.on('coords', function (data) {
+    io.emit('coords', data);
   });
 });
 

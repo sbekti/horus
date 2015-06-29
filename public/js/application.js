@@ -163,13 +163,12 @@ function onLocationFound(e) {
   socket.emit('update', data);
   isFirstLock = false;
 
-  setTimeout(function() {
-    updateLocation();
-  }, 10000);
+  setTimeout(updateLocation, 10000);
 }
 
 function onLocationError(e) {
   showAlert(e.message);
+  setTimeout(updateLocation, 10000);
 }
 
 function bindPopup(marker, data) {
@@ -208,6 +207,12 @@ socket.on('update', function(data) {
 
   users[data.username].data = data;
   users[data.username].timestamp = new Date().getTime();
+
+  var uid = window.location.hash.split('/')[1];
+
+  if (data.username == uid) {
+    map.panTo(latlng);
+  }
 });
 
 function cleanUpMarkers() {

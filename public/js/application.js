@@ -45,7 +45,15 @@ socket.on('coords', function(data) {
       delete circles[data.uid];
     }
 
-    circle = new google.maps.Circle({
+    var marker = new google.maps.Marker({
+      position: new google.maps.LatLng(data.lat, data.lng),
+      map: map,
+      title: data.uid,
+      accuracy: data.accuracy,
+      timestamp: data.timestamp
+    });
+
+    var circle = new google.maps.Circle({
       center: new google.maps.LatLng(data.lat, data.lng),
       map: map,
       radius: data.accuracy

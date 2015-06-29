@@ -1,8 +1,10 @@
 var socket = io();
 var map;
 var userMarker;
+var userCircle;
 var markers = {};
-var infowindow = new google.maps.InfoWindow();
+var circles = {};
+var infoWindow = new google.maps.InfoWindow();
 var uid = Math.random().toString(16).substring(2, 15);
 
 setInterval(function() {
@@ -16,8 +18,13 @@ setInterval(function() {
     if (now - markers[uid].timestamp > 30000) {
       var marker = markers[uid];
       marker.setMap(null);
-      marker == null;
+      marker = null;
       delete markers[uid];
+
+      var circle = circles[uid];
+      circle.setMap(null);
+      circle = null;
+      delete circles[uid];
     }
   }
 }, 15000);
@@ -31,24 +38,34 @@ socket.on('coords', function(data) {
       delete markers[data.uid];
     }
 
-    marker = new google.maps.Marker({
-      position: new google.maps.LatLng(data.lat, data.lng),
+    if (circles[data.uid] != undefined) {
+      var circle = circles[data.uid];
+      circle.setMap(null);
+      circle = null;
+      delete circles[data.uid];
+    }
+
+    circle = new google.maps.Circle({
+      center: new google.maps.LatLng(data.lat, data.lng),
       map: map,
-      title: data.uid,
-      accuracy: data.accuracy,
-      timestamp: data.timestamp
+      radius: data.accuracy
     });
 
     google.maps.event.addListener(marker, 'click', function() {
       map.setZoom(18);
       map.setCenter(marker.getPosition());
-      infowindow.setContent('<strong>' + marker.title + '</strong><br>Accuracy: ' + marker.accuracy + 'm');
-      infowindow.open(map, marker);
+      updateInfoWindow(marker);
+      infoWindow.open(map, marker);
     });
 
     markers[data.uid] = marker;
+    circles[data.uid] = circle;
   }
 });
+
+function updateInfoWindow(marker) {
+  infoWindow.setContent('<strong>' + marker.title + '</strong><br>Accuracy: ' + marker.accuracy + 'm');
+}
 
 function initialize() {
   map = new google.maps.Map(document.getElementById('map-canvas'), {
@@ -61,11 +78,15 @@ function initialize() {
     title: 'My position',
   });
 
+  userCircle = new google.maps.Circle({
+    map: map
+  });
+
   google.maps.event.addListener(userMarker, 'click', function() {
     map.setZoom(18);
     map.setCenter(userMarker.getPosition());
-    infowindow.setContent('<strong>' + userMarker.title + '</strong><br>Accuracy: ' + userMarker.accuracy + 'm');
-    infowindow.open(map, userMarker);
+    updateInfoWindow(userMarker);
+    infoWindow.open(map, userMarker);
   });
 
   updateCoordinates();
@@ -103,6 +124,8 @@ function successCallback(pos) {
   var latlng = new google.maps.LatLng(data.lat, data.lng);
   userMarker.setPosition(latlng);
   userMarker.accuracy = data.accuracy;
+  userCircle.setCenter(latlng);
+  userCircle.setRadius(data.accuracy);
 }
 
 function errorCallback(err) {

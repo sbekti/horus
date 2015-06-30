@@ -74,6 +74,7 @@ var username;
 var users = {};
 var isFirstLock = true;
 var alertTimer;
+var user = {};
 
 function initialize() {
   map = L.map('map').setView([51.505, -0.09], 2);
@@ -164,7 +165,7 @@ function onLocationFound(e) {
     accuracy: e.accuracy,
     altitudeAccuracy: e.altitudeAccuracy
   }
-
+  user = data;
   socket.emit('update', data);
   isFirstLock = false;
 
@@ -203,10 +204,14 @@ socket.on('update', function(data) {
     var circle = L.circle(latlng, radius).addTo(map);
     users[data.username].circle = circle;
 
-    $('#dropup-tracking ul').append('<li id="li-' + data.username + '"><a href="#!/' + data.username + '">' + data.username + '</a></li>');
 
     if (data.username != username) {
+      $('#dropup-tracking ul').append('<li id="li-' + data.username + '"><a href="#!/' + data.username + '">' + data.username + ' ['+marker.getLatLng().distanceTo(new L.LatLng(user.latitude, user.longitude)).toFixed(0)+'m]</a></li>');
+
       showAlert(data.username + ' has joined.');
+    } else {
+      $('#dropup-tracking ul').append('<li id="li-' + data.username + '"><a href="#!/' + data.username + '">' + data.username + ' (you)</a></li>');
+
     }
   } else {
     var existingMarker = users[data.username].marker;

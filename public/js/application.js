@@ -149,7 +149,8 @@ function signup() {
 function updateLocation() {
   map.locate({
     setView: isFirstLock,
-    maxZoom: 16
+    maxZoom: 16,
+    enableHighAccuracy: true
   });
 }
 

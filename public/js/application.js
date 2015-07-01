@@ -25,7 +25,7 @@ var Application = React.createClass({
   },
 
   componentDidMount: function() {
-    //this.socket.emit('chat:history');
+    this.socket.emit('chat:history');
 
     $('#signup-modal').modal({
       backdrop: 'static',

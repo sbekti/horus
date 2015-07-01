@@ -275,6 +275,8 @@ var Map = React.createClass({
     if ((this.state.isFirstLock) && (data.username == this.props.username)) {
       marker.openPopup();
       this.setState({isFirstLock: false});
+      this.map.stopLocate();
+      this.locate();
     }
   },
 
@@ -454,6 +456,12 @@ var ChatModal = React.createClass({
   },
 
   handleSubmit: function(message) {
+    $('#chat-modal').on('shown.bs.modal', function() {
+      var elem = document.getElementById('message-list');
+      elem.scrollTop = elem.scrollHeight;
+      self.props.onShown();
+    });
+
     this.props.onSendMessage(message);
   },
 

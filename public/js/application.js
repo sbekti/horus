@@ -550,6 +550,8 @@ var SignUpModal = React.createClass({
 
 var CustomMapControls = React.createClass({
   showPopover: function(title, content) {
+    $('#btn-chat').popover('destroy');
+
     $('#btn-chat').popover({
       title: title,
       content: content,

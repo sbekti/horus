@@ -2,7 +2,8 @@ var Application = React.createClass({
   getInitialState: function() {
     return {
       username: null,
-      users: {}
+      users: {},
+      isChatModalOpen: false
     };
   },
 
@@ -80,7 +81,10 @@ var Application = React.createClass({
 
       notification.show();
 
-      this.refs.controls.showPopover(data.sender, data.text);
+      if (!this.state.isChatModalOpen) {
+        this.refs.controls.incrementBubble();
+        this.refs.controls.showPopover(data.sender, data.text);
+      }
     }
   },
 
@@ -168,6 +172,15 @@ var Application = React.createClass({
     this.refs.map.zoomTo(user);
   },
 
+  handleChatModalShown() {
+    this.setState({isChatModalOpen: true});
+    this.refs.controls.resetBubble();
+  },
+
+  handleChatModalHidden() {
+    this.setState({isChatModalOpen: false});
+  },
+
   render: function() {
     return (
       <div>
@@ -176,7 +189,7 @@ var Application = React.createClass({
         <Map users={this.state.users} username={this.state.username} onLocationFound={this.handleLocationFound} onLocationError={this.handleLocationError} pollInterval={this.props.pollInterval} ref='map' />
         <SignUpModal initialUsername={this.randomName} onSignUp={this.handleSignUp} />
         <UsersModal users={this.state.users} onClick={this.handleUserButtonClick} />
-        <ChatModal onSendMessage={this.handleSendMessage} ref='chat' />
+        <ChatModal onShown={this.handleChatModalShown} onHidden={this.handleChatModalHidden} onSendMessage={this.handleSendMessage} ref='chat' />
       </div>
     );
   }
@@ -413,9 +426,16 @@ var ChatModal = React.createClass({
   },
 
   componentDidMount: function() {
+    var self = this;
+
     $('#chat-modal').on('shown.bs.modal', function() {
       var elem = document.getElementById('message-list');
       elem.scrollTop = elem.scrollHeight;
+      self.props.onShown();
+    });
+
+    $('#chat-modal').on('hidden.bs.modal', function() {
+      self.props.onHidden();
     });
   },
 
@@ -606,6 +626,14 @@ var CustomMapControls = React.createClass({
     });
   },
 
+  incrementBubble: function() {
+    this.refs.bubble.increment();
+  },
+
+  resetBubble: function() {
+    this.refs.bubble.reset();
+  },
+
   showPopover: function(title, content) {
     var popover = $('#btn-chat').data('bs.popover');
     popover.options.title = title;
@@ -624,10 +652,33 @@ var CustomMapControls = React.createClass({
   render: function() {
     return (
       <div id='controls'>
+        <NotificationBubble ref='bubble' />
         <button id='btn-chat' type='button' aria-label='Chat' className='btn btn-default btn-custom-controls' onClick={this.props.onChatButtonClick}><span aria-hidden='true' className='glyphicon glyphicon-comment' data-toggle='popover' data-trigger='focus' /></button>
         <button type='button' aria-label='Active Users' className='btn btn-default btn-custom-controls' onClick={this.props.onUsersButtonClick}><span aria-hidden='true' className='glyphicon glyphicon-user' /></button>
         <button type='button' aria-label='My Location' className='btn btn-default btn-custom-controls' onClick={this.props.onLocationButtonClick}><span aria-hidden='true' className='glyphicon glyphicon-screenshot' /></button>
       </div>
+    );
+  }
+});
+
+var NotificationBubble = React.createClass({
+  getInitialState: function() {
+    return {
+      count: 0
+    };
+  },
+
+  increment: function() {
+    this.setState({count: this.state.count + 1});
+  },
+
+  reset: function() {
+    this.setState({count: 0});
+  },
+
+  render: function() {
+    return (
+      this.state.count == 0 ? null : <div className='noti-bubble'>{this.state.count}</div>
     );
   }
 });

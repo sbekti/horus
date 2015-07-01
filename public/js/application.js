@@ -589,7 +589,8 @@ var SignUpModal = React.createClass({
     e.preventDefault();
 
     var username = this.state.username;
-    if (!username) {return;}
+    var re = new RegExp('^[-a-zA-Z0-9]+$');
+    if ((!username) || (!re.test(username))) {return;}
 
     this.props.onSignUp(username);
   },

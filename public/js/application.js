@@ -172,12 +172,12 @@ var Application = React.createClass({
     this.refs.map.zoomTo(user);
   },
 
-  handleChatModalShown() {
+  handleChatModalShown: function() {
     this.setState({isChatModalOpen: true});
     this.refs.controls.resetBubble();
   },
 
-  handleChatModalHidden() {
+  handleChatModalHidden: function() {
     this.setState({isChatModalOpen: false});
   },
 

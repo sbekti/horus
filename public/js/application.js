@@ -340,7 +340,7 @@ var UserList = React.createClass({
     var users = this.props.users;
 
     var userNodes = Object.keys(users).map(function(user) {
-      if (user.indexOf(self.state.filter) > -1) {
+      if (user.toLowerCase().indexOf(self.state.filter.toLowerCase()) > -1) {
         return (
           <UserNode name={user} key={user} onClick={self.handleClick} />
         );

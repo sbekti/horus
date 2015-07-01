@@ -334,7 +334,6 @@ var Map = React.createClass({
   },
 
   onLocationFound: function(e) {
-    console.log('found');
     this.props.onLocationFound(e);
   },
 

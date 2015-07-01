@@ -257,17 +257,23 @@ var Map = React.createClass({
     var marker = L.marker(latlng).addTo(this.map);
     var circle = L.circle(latlng, radius).addTo(this.map);
 
-    var map = this.map;
+    var self = this;
 
     marker.on('click', function(e) {
-      map.panTo(e.latlng);
+      self.map.panTo(e.latlng);
     });
 
     marker.on('dblclick', function(e) {
-      map.setView(e.latlng, 16);
+      self.map.setView(e.latlng, 16);
     });
 
-    this.bindPopup(marker, data);
+    marker.on('popupopen', function(e) {
+      var popupContent = self.generatePopupContent(marker.username);
+      e.popup.setContent(popupContent);
+    });
+
+    marker.bindPopup();
+    marker.username = data.username;
 
     user.marker = marker;
     user.circle = circle;
@@ -286,7 +292,6 @@ var Map = React.createClass({
 
     var existingMarker = user.marker;
     existingMarker.setLatLng(latlng);
-    this.bindPopup(existingMarker, data);
 
     var existingCircle = user.circle;
     existingCircle.setLatLng(latlng);
@@ -303,7 +308,8 @@ var Map = React.createClass({
     this.map.removeLayer(circle);
   },
 
-  bindPopup: function(marker, data) {
+  generatePopupContent: function(username) {
+    var user = this.props.users[username];
     var me = this.props.users[this.props.username];
 
     // Sometimes, other user's location got received ahead of ours.
@@ -311,19 +317,17 @@ var Map = React.createClass({
     // If we don't have the data yet, use the generic marker popup.
     // This is also the case if we deny sharing our location.
     if (!me) {
-      var html = '<span class="marker-title">' + data.username + '</span><br>LatLng: [' + data.latitude + ', ' + data.longitude + ']<br>Accuracy: ' + data.accuracy + ' m<br>Last updated: ' + $.timeago(data.timestamp);
-      marker.bindPopup(html);
-
-      return;
+      var html = '<span class="marker-title">' + username + '</span><br>LatLng: [' + user.data.latitude.toFixed(4) + ', ' + user.data.longitude.toFixed(4) + ']<br>Accuracy: ' + user.data.accuracy + ' m<br>Last updated: ' + $.timeago(user.data.timestamp);
+      return html;
     }
 
     var myLatLng = L.latLng(me.data.latitude, me.data.longitude);
-    var otherLatLng = L.latLng(data.latitude, data.longitude);
-    var you = data.username == this.props.username ? ' (you)' : '';
-    var distanceTo = data.username == this.props.username ? '' : '<br>Distance from me: ' + otherLatLng.distanceTo(myLatLng).toFixed(0) + ' m';
+    var userLatLng = L.latLng(user.data.latitude, user.data.longitude);
+    var you = username == this.props.username ? ' (you)' : '';
+    var distance = username == this.props.username ? '' : '<br>Distance from me: ' + userLatLng.distanceTo(myLatLng).toFixed(0) + ' m';
 
-    var html = '<span class="marker-title">' + data.username + you + '</span>' + distanceTo + '<br>LatLng: [' + data.latitude.toFixed(4) + ', ' + data.longitude.toFixed(4) + ']<br>Accuracy: ' + data.accuracy + ' m<br>Last updated: ' + $.timeago(data.timestamp);
-    marker.bindPopup(html);
+    var html = '<span class="marker-title">' + username + you + '</span>' + distance + '<br>LatLng: [' + user.data.latitude.toFixed(4) + ', ' + user.data.longitude.toFixed(4) + ']<br>Accuracy: ' + user.data.accuracy + ' m<br>Last updated: ' + $.timeago(user.data.timestamp);
+    return html;
   },
 
   locate: function() {
@@ -451,15 +455,17 @@ var ChatModal = React.createClass({
     var appendedMessages = messages.concat([message]);
     this.setState({messages: appendedMessages});
 
-    var elem = document.getElementById('message-list');
-    elem.scrollTop = elem.scrollHeight;
+    // HACK HACK
+    setTimeout(function() {
+      var elem = document.getElementById('message-list');
+      elem.scrollTop = elem.scrollHeight;
+    }, 1);
   },
 
   handleSubmit: function(message) {
     $('#chat-modal').on('shown.bs.modal', function() {
       var elem = document.getElementById('message-list');
       elem.scrollTop = elem.scrollHeight;
-      self.props.onShown();
     });
 
     this.props.onSendMessage(message);

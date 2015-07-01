@@ -41,7 +41,9 @@ io.on('connection', function (socket) {
   });
 
   socket.on('disconnect', function() {
-    io.emit('user:disconnect', socket.username);
+    if (socket.username != undefined) {
+      io.emit('user:disconnect', socket.username);
+    }
   });
 });
 

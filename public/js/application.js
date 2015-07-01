@@ -70,7 +70,8 @@ var Application = React.createClass({
 
       var notification = new Notify(data.sender, {
         body: data.text,
-        icon: '/favicon/favicon-96x96.png'
+        icon: '/favicon/favicon-96x96.png',
+        timeout: 5
       });
 
       notification.show();
@@ -370,13 +371,17 @@ var ChatModal = React.createClass({
     };
   },
 
+  componentDidMount: function() {
+    $('#chat-modal').on('shown.bs.modal', function() {
+      var elem = document.getElementById('message-list');
+      elem.scrollTop = elem.scrollHeight;
+    });
+  },
+
   pushHistory: function(history) {
     var messages = this.state.messages;
     var appendedMessages = history.concat(messages);
     this.setState({messages: appendedMessages});
-
-    var elem = document.getElementById('message-list');
-    elem.scrollTop = elem.scrollHeight;
   },
 
   push: function(message) {
@@ -426,7 +431,7 @@ var MessageList = React.createClass({
   render: function() {
     var messageNodes = this.props.messages.map(function(message) {
       return (
-        <Message sender={message.sender} timestamp={message.timestamp}>
+        <Message sender={message.sender} key={message.sender + message.timestamp} timestamp={message.timestamp}>
           {message.text}
         </Message>
       );
@@ -549,20 +554,27 @@ var SignUpModal = React.createClass({
 });
 
 var CustomMapControls = React.createClass({
-  showPopover: function(title, content) {
-    $('#btn-chat').popover('destroy');
+  componentWillMount: function() {
+    this.timer = null;
+  },
 
+  componentDidMount: function() {
     $('#btn-chat').popover({
-      title: title,
-      content: content,
       placement: 'top',
       trigger: 'manual'
     });
+  },
 
+  showPopover: function(title, content) {
+    var popover = $('#btn-chat').data('bs.popover');
+    popover.options.title = title;
+    popover.options.content = content;
     $('#btn-chat').popover('show');
 
     $('#btn-chat').on('shown.bs.popover', function() {
-      setTimeout(function() {
+      clearTimeout(this.timer);
+
+      this.timer = setTimeout(function() {
         $('#btn-chat').popover('hide');
       }, 3000);
     })

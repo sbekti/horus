@@ -15,48 +15,38 @@ html
     link(rel='apple-touch-icon', sizes='144x144', href='/favicon/apple-icon-144x144.png')
     link(rel='apple-touch-icon', sizes='152x152', href='/favicon/apple-icon-152x152.png')
     link(rel='apple-touch-icon', sizes='180x180', href='/favicon/apple-icon-180x180.png')
+
     link(rel='icon', type='image/png', sizes='192x192', href='/favicon/android-icon-192x192.png')
     link(rel='icon', type='image/png', sizes='32x32', href='/favicon/favicon-32x32.png')
     link(rel='icon', type='image/png', sizes='96x96', href='/favicon/favicon-96x96.png')
     link(rel='icon', type='image/png', sizes='16x16', href='/favicon/favicon-16x16.png')
+
     link(rel='manifest', href='/favicon/manifest.json')
     meta(name='msapplication-TileColor', content='#ffffff')
     meta(name='msapplication-TileImage', content='/favicon/ms-icon-144x144.png')
     meta(name='theme-color', content='#ffffff')
 
-    meta(property='og:image', content='/img/logo.png')
+    meta(property='og:title', content='Bekti Geolocation Services')
+    meta(property='og:site_name', content='Bekti Geolocation Services')
+    meta(property='og:type', content='website')
+    meta(property='og:image', content='http://horus.bekti.io/img/logo.png')
+    meta(property='og:url', content='http://horus.bekti.io')
     meta(property='og:description', content='Bekti Geolocation Services enables you to easily share your location with your friends.')
 
     link(rel='stylesheet', href='//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css')
     link(rel='stylesheet', href='//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css')
     link(rel='stylesheet', href='./css/styles.css')
   body
-    #alert.alert.alert-warning.alert-dismissible(role='alert')
-    #signup.modal.fade(tabindex='-1', role='dialog', aria-labelledby='signup')
-      .modal-dialog(role='document')
-        .modal-content
-          .modal-header
-            h4#myModalLabel.modal-title
-              img(src='/img/wadjet.svg', width=33)
-              |   Bekti Geolocation Services
-          .modal-body
-            p You will need to enable geolocation feature in your browser to be able to share your location with other users.
-            p To help the others identify you on the map, please provide a unique name.
-            form#form-signup(data-toggle='validator', role='form')
-              .input-group
-                span#basic-addon1.input-group-addon @
-                input#input-username.form-control(type='text', placeholder='Username', maxlength='20', aria-describedby='basic-addon1')
-          .modal-footer
-            button#btn-start.btn.btn-primary(type='button') Start
-    #map
-    #dropup-tracking.dropup
-      button#dropdown-tracking.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
-        | Active Users
-        span.caret
-      ul.dropdown-menu.dropdown-menu-right(aria-labelledby='dropdown-tracking')
-    script(src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js')
-    script(src='//cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.4.1/jquery.timeago.min.js')
-    script(src='//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js')
-    script(src='//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js')
-    script(src='/socket.io/socket.io.js')
-    script(src='./js/application.js')
+    #react-root
+
+  script(src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js')
+  script(src='//cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.4.1/jquery.timeago.min.js')
+  script(src='//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js')
+  script(src='//cdnjs.cloudflare.com/ajax/libs/howler/1.1.26/howler.min.js')
+  script(src='//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js')
+  script(src='//cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js')
+  script(src='//cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js')
+  script(src='/socket.io/socket.io.js')
+  script(src='/js/notify.js')
+  script(src='/js/name-generator.js')
+  script(type='text/jsx', src='./js/application.js')

@@ -8,6 +8,8 @@ var app = express();
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);
 
+var chatHistory = [];
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
@@ -19,8 +21,27 @@ app.get('/', function(req, res) {
 });
 
 io.on('connection', function (socket) {
-  socket.on('update', function (data) {
-    io.emit('update', data);
+  socket.on('user:location', function(data) {
+    socket.username = data.username;
+    io.emit('user:location', data);
+  });
+
+  socket.on('chat:message', function(data) {
+    chatHistory.push(data);
+
+    if (chatHistory.length > 200) {
+      chatHistory.shift();
+    }
+
+    io.emit('chat:message', data);
+  });
+
+  socket.on('chat:history', function() {
+    socket.emit('chat:history', chatHistory);
+  });
+
+  socket.on('disconnect', function() {
+    io.emit('user:disconnect', socket.username);
   });
 });
 

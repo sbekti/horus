@@ -1,20 +1,41 @@
-body {
-  padding: 0;
-  margin: 0;
-}
-html, body, #map {
+html, body {
   height: 100%;
+  width: 100%;
 }
+
 span.marker-title {
   font-weight: bold;
   font-size: 18px;
 }
+
+span.message-sender {
+  font-weight: bold;
+}
+
+div.user-nodes {
+  margin-top: 10px;
+}
+
+button.user-node {
+  margin-right: 5px;
+  margin-top: 5px;
+}
+
+button.btn-custom-controls {
+  margin-left: 5px;
+}
+
+div.message-container {
+  max-height: 200px;
+  overflow: auto;
+}
+
 #alert {
   display: none;
   position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  text-align: center;
   z-index: 101;
+  top: 0;
+  right: 0;
+  left: 0;
+  text-align: center;
 }

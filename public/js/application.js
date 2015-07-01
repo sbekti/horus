@@ -1,266 +1,609 @@
-var adjectives = new Array(
-  'accurate', 'abundant', 'addicted', 'adorable', 'adventurous', 'afraid', 'aggressive', 'agreeable', 'alcoholic', 'alert',
-  'aloof', 'ambitious', 'amused', 'ancient', 'angry', 'animated', 'annoyed', 'annoying', 'anxious', 'arrogant', 'ashamed',
-  'attractive', 'auspicious', 'average', 'awesome', 'awful', 'bad', 'bashful', 'beautiful', 'belligerent', 'beneficial', 'best',
-  'better', 'big', 'bitter', 'bizarre', 'black', 'blue', 'boiling', 'boring', 'brainy', 'brave', 'breezy', 'brief', 'bright',
-  'broad', 'broken', 'bumpy', 'busy', 'calm', 'capable', 'careful', 'careless', 'caring', 'cautious', 'charming', 'cheap',
-  'cheerful', 'chilly', 'chubby', 'clean', 'clever', 'clumsy', 'cold', 'colorful', 'colossal', 'combative', 'comfortable',
-  'concerned', 'confused', 'cooing', 'cool', 'cooperative', 'courageous', 'crazy', 'creepy', 'crowded', 'cruel', 'cuddly',
-  'curious', 'curly', 'curved', 'cute', 'damaged', 'damp', 'dangerous', 'dark', 'deafening', 'deep', 'defeated', 'defective',
-  'defiant', 'delicate', 'delicious', 'delightful', 'depressed', 'determined', 'different', 'dirty', 'disgusted', 'disgusting',
-  'disturbed', 'dizzy', 'dry', 'dull', 'dusty', 'eager', 'early', 'educated', 'efficient', 'elated', 'elderly', 'elegant',
-  'embarrassed', 'empty', 'encouraging', 'energetic', 'enthusiastic', 'envious', 'evil', 'excellent', 'excited', 'exciting',
-  'expensive', 'exuberant', 'fabulous', 'faint', 'fair', 'faithful', 'famous', 'fancy', 'fantastic', 'fast', 'fat', 'fearful',
-  'fearless', 'fertile', 'few', 'fierce', 'filthy', 'fine', 'flaky', 'flat', 'fluffy', 'foolish', 'forgetful', 'frail', 'frantic',
-  'fresh', 'friendly', 'frightened', 'funny', 'fuzzy', 'gentle', 'giant', 'gigantic', 'glamorous', 'glorious', 'good', 'gorgeous',
-  'graceful', 'grateful', 'greasy', 'great', 'greedy', 'green', 'grieving', 'grubby', 'grumpy', 'handsome', 'happy', 'hard', 'harsh',
-  'healthy', 'heavy', 'helpful', 'helpless', 'high', 'hilarious', 'hissing', 'historical', 'hollow', 'homeless', 'horrible', 'hot',
-  'huge', 'humorous', 'hungry', 'hurt', 'hushed', 'husky', 'icy', 'ignorant', 'ill', 'illegal', 'imaginary', 'immense', 'impolite',
-  'important', 'impossible', 'innocent', 'intelligent', 'interesting', 'itchy', 'jealous', 'jittery', 'jolly', 'juicy', 'juvenile',
-  'kind', 'large', 'late', 'lazy', 'legal', 'light', 'literate', 'little', 'lively', 'lonely', 'long', 'loose', 'loud', 'lovely',
-  'low', 'lucky', 'macho', 'magical', 'magnificent', 'many', 'massive', 'mature', 'mean', 'melodic', 'melted', 'messy', 'mighty',
-  'miniature', 'moaning', 'modern', 'mute', 'mysterious', 'narrow', 'nasty', 'naughty', 'nervous', 'new', 'nice', 'noisy', 'nosy',
-  'numerous', 'nutritious', 'nutty', 'obedient', 'obese', 'obnoxious', 'odd', 'old', 'orange', 'ordinary', 'outrageous',
-  'overconfident', 'panicky', 'peaceful', 'perfect', 'petite', 'pink', 'plastic', 'pleasant', 'polite', 'poor', 'powerful',
-  'precious', 'pretty', 'prickly', 'proud', 'puny', 'purple', 'purring', 'quaint', 'quick', 'quickest', 'quiet', 'rainy',
-  'rapid', 'rare', 'raspy', 'ratty', 'red', 'relieved', 'remarkable', 'repulsive', 'resonant', 'responsible', 'rich', 'ripe',
-  'roasted', 'robust', 'romantic', 'rotten', 'rough', 'round', 'royal', 'rude', 'sad', 'salty', 'scary', 'scattered', 'scintillating',
-  'scrawny', 'screeching', 'secretive', 'selfish', 'serious', 'shaggy', 'shaky', 'shallow', 'sharp', 'shiny', 'shivering', 'shocking',
-  'short', 'shrill', 'shy', 'silent', 'silky', 'silly', 'sincere', 'skinny', 'slim', 'slimy', 'slippery', 'slow', 'small', 'smiling',
-  'smooth', 'soft', 'solid', 'sore', 'sour', 'spicy', 'spiritual', 'splendid', 'spotty', 'square', 'squealing', 'stale', 'steady',
-  'steep', 'sticky', 'stingy', 'straight', 'strange', 'striped', 'strong', 'successful', 'sweet', 'swift', 'talented', 'tall', 'tame',
-  'tan', 'tart', 'tasteless', 'tasty', 'tender', 'tense', 'terrible', 'terrific', 'testy', 'thick', 'thin', 'thirsty', 'thoughtful',
-  'thoughtless', 'thundering', 'tight', 'tiny', 'tired', 'tough', 'tricky', 'troubled', 'ugliest', 'ugly', 'uneven', 'unique',
-  'untidy', 'upset', 'uptight', 'vast', 'victorious', 'violent', 'vivacious', 'voiceless', 'vulgar', 'warm', 'wasteful', 'watery',
-  'weak', 'wealthy', 'weary', 'wet', 'whispering', 'wicked', 'wide', 'wide-eyed', 'wise', 'witty', 'wonderful', 'wooden', 'worried',
-  'yellow', 'young', 'youthful', 'yummy', 'zany', 'zealous'
-);
+var Application = React.createClass({
+  getInitialState: function() {
+    return {
+      username: null,
+      users: {}
+    };
+  },
 
-var animals = new Array(
-  'aardvark', 'alligator', 'anteater', 'antelope', 'ape', 'armadillo', 'ass', 'baboon', 'badger', 'bat', 'bear', 'beaver',
-  'bighorn', 'bison', 'boar', 'buffalo', 'bull', 'bunny', 'camel', 'canary', 'cat', 'chameleon', 'cheetah', 'chimpanzee',
-  'chinchilla', 'chipmunk', 'colt', 'cougar', 'cow', 'coyote', 'crocodile', 'crow', 'deer', 'dingo', 'doe', 'dog', 'donkey',
-  'dormouse', 'duckbill', 'elephant', 'elk', 'fawn', 'ferret', 'fish', 'fox', 'frog', 'gazelle', 'giraffe', 'goat', 'gopher',
-  'gorilla', 'grizzly bear', 'ground hog', 'guinea pig', 'hamster', 'hare', 'hedgehog', 'hippopotamus', 'hog', 'horse', 'hyena',
-  'iguana', 'jackal', 'jaguar', 'kangaroo', 'kitten', 'koala', 'lamb', 'lemur', 'leopard', 'lion', 'lizard', 'llama', 'lovebird',
-  'mink', 'mole', 'mongoose', 'monkey', 'moose', 'mouse', 'mule', 'muskrat', 'newt', 'ocelot', 'opossum', 'orangutan', 'otter', 'ox',
-  'panda', 'panther', 'parrot', 'pig', 'platypus', 'polar bear', 'pony', 'porcupine', 'prairie dog', 'puma', 'puppy', 'rabbit',
-  'raccoon', 'ram', 'rat', 'reindeer', 'rhinoceros', 'roebuck', 'salamander', 'seal', 'sheep', 'shrew', 'silver fox', 'skunk',
-  'sloth', 'snake', 'squirrel', 'stallion', 'tiger', 'toad', 'turtle', 'walrus', 'warthog', 'waterbuck', 'weasel', 'whale',
-  'wildcat', 'wolf', 'wombat', 'yak', 'yetti', 'zebra'
-);
+  componentWillMount: function() {
+    this.socket = io();
+    this.socket.on('user:location', this.handleLocationUpdate);
+    this.socket.on('user:disconnect', this.handleUserDisconnect);
+    this.socket.on('chat:message', this.handleReceiveMessage);
+    this.socket.on('chat:history', this.handleReceiveChatHistory);
 
-function getRandomName() {
-  var adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
-  var animal = animals[Math.floor(Math.random() * animals.length)];
-
-  return (adjective + ' ' + animal).split(' ').join('-');
-}
-
-function showAlert(message) {
-  $('#alert').html(message);
-  $('#alert').slideDown();
-
-  clearTimeout(alertTimer);
-  alertTimer = setTimeout(dismissAlert, 5000);
-}
-
-function dismissAlert() {
-  $('#alert').slideUp();
-}
-
-var socket = io();
-var username;
-var users = {};
-var isFirstLock = true;
-var alertTimer;
-
-function initialize() {
-  map = L.map('map').setView([51.505, -0.09], 2);
-
-  L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-  }).addTo(map);
-
-  map.on('locationfound', onLocationFound);
-  map.on('locationerror', onLocationError);
-
-  map.on('click', function(e) {
-    window.location.hash = '#!/';
-  });
-
-  var legend = L.control({
-    position: 'bottomright'
-  });
-
-  legend.onAdd = function(map) {
-    var div = L.DomUtil.create('div', 'legend-controls');
-    return div;
-  };
-
-  legend.addTo(map);
-  var legendControls = $('.legend-controls');
-  var dropup = $('#dropup-tracking').detach().appendTo(legendControls);
-  legendControls.first().dblclick(L.DomEvent.stopPropagation);
-  legendControls.first().mousedown(L.DomEvent.stopPropagation);
-
-  // Webkit text input hack
-  $('input:text').mouseup(function(e) {
-    return false;
-  });
-
-  // Pre-populate username
-  $('#input-username').val(getRandomName());
-
-  $('#form-signup').submit(function(e) {
-    signup();
-    e.preventDefault();
-  });
-
-  $('#btn-start').click(function() {
-    signup();
-  });
-
-  // Select input text on focus
-  $('#signup').on('shown.bs.modal', function() {
-    $('#input-username').focus(function() {
-      $(this).select();
+    this.sound = new Howl({
+      urls: ['/img/sound_a.mp3']
     });
-  })
 
-  $('#signup').modal({
-    backdrop: 'static',
-    keyboard: false
-  });
-}
-
-function signup() {
-  var input = $('#input-username').val();
-
-  if (!input || !input.length) {
-
-  } else {
-    username = input;
-    updateLocation();
-    $('#signup').modal('hide');
-  }
-}
-
-function updateLocation() {
-  map.locate({
-    setView: isFirstLock,
-    maxZoom: 16,
-    enableHighAccuracy: true
-  });
-}
-
-function onLocationFound(e) {
-  var data = {
-    username: username,
-    timestamp: e.timestamp,
-    latitude: e.latitude,
-    longitude: e.longitude,
-    altitude: e.altitude,
-    accuracy: e.accuracy,
-    altitudeAccuracy: e.altitudeAccuracy
-  }
-
-  socket.emit('update', data);
-  isFirstLock = false;
-
-  setTimeout(updateLocation, 10000);
-}
-
-function onLocationError(e) {
-  showAlert(e.message);
-  setTimeout(updateLocation, 10000);
-}
-
-function bindPopup(marker, data) {
-  var html = '<span class="marker-title">' + data.username + '</span><br>LatLng: [' + data.latitude + ', ' + data.longitude + ']<br>Accuracy: ' + data.accuracy + ' m<br>Last updated: ' + $.timeago(data.timestamp);
-  marker.bindPopup(html);
-}
-
-socket.on('update', function(data) {
-  var latlng = L.latLng(data.latitude, data.longitude);
-  var radius = data.accuracy / 2;
-
-  if (!users[data.username]) {
-    users[data.username] = {};
-
-    var marker = L.marker(latlng).addTo(map);
-    marker.on('click', function(e) {
-      map.panTo(e.latlng);
-      window.location.hash = '#!/' + data.username;
-    });
-    marker.on('dblclick', function(e) {
-      map.setView(e.latlng, 16);
-      window.location.hash = '#!/' + data.username;
-    });
-    bindPopup(marker, data);
-    users[data.username].marker = marker;
-
-    var circle = L.circle(latlng, radius).addTo(map);
-    users[data.username].circle = circle;
-
-    $('#dropup-tracking ul').append('<li id="li-' + data.username + '"><a href="#!/' + data.username + '">' + data.username + '</a></li>');
-
-    if (data.username != username) {
-      showAlert(data.username + ' has joined.');
+    if (Notify.needsPermission) {
+      Notify.requestPermission();
     }
-  } else {
-    var existingMarker = users[data.username].marker;
-    existingMarker.setLatLng(latlng);
-    bindPopup(existingMarker, data);
 
-    var existingCircle = users[data.username].circle;
-    existingCircle.setLatLng(latlng);
-    existingCircle.setRadius(radius);
-  }
+    this.randomName = nameGenerator.getRandomName();
+  },
 
-  users[data.username].data = data;
-  users[data.username].timestamp = new Date().getTime();
+  componentDidMount: function() {
+    this.socket.emit('chat:history');
 
-  var uid = window.location.hash.split('/')[1];
+    $('#signup-modal').modal({
+      backdrop: 'static',
+      keyboard: false
+    });
+  },
 
-  if (data.username == uid) {
-    map.panTo(latlng);
+  handleSignUp: function(username) {
+    this.setState({username: username});
+    this.refs.map.locate();
+    $('#signup-modal').modal('hide');
+    this.refs.notifications.show('Signed in as ' + username + '. Retrieving current position...');
+  },
+
+  handleUserDisconnect: function(username) {
+    var users = this.state.users;
+    var user = users[username];
+
+    this.refs.map.removeMarker(user);
+
+    delete users[username];
+    this.setState({users: users});
+
+    this.refs.notifications.show(username + ' has left.');
+  },
+
+  handleSendMessage: function(text) {
+    var data = {
+      sender: this.state.username,
+      text: text,
+      timestamp: new Date().getTime()
+    }
+
+    this.socket.emit('chat:message', data);
+  },
+
+  handleReceiveMessage: function(data) {
+    this.refs.chat.push(data);
+
+    if (data.sender != this.state.username) {
+      this.sound.play();
+
+      var notification = new Notify(data.sender, {
+        body: data.text,
+        icon: '/favicon/favicon-96x96.png'
+      });
+
+      notification.show();
+
+      this.refs.controls.showPopover(data.sender, data.text);
+    }
+  },
+
+  handleReceiveChatHistory: function(history) {
+    this.refs.chat.pushHistory(history);
+  },
+
+  handleLocationUpdate: function(data) {
+    var users = this.state.users;
+    var user = users[data.username];
+
+    if (!user) {
+      var newUser = {
+        data: data,
+        timestamp: new Date().getTime()
+      };
+
+      this.refs.map.addMarker(newUser, data);
+      users[data.username] = newUser;
+
+      if (data.username != this.state.username) {
+        this.refs.notifications.show(data.username + ' has joined.');
+      }
+    } else {
+      user.data = data;
+      user.timestamp = new Date().getTime();
+      this.refs.map.updateMarker(user, data);
+    }
+
+    this.setState({users: users});
+  },
+
+  handleLocationFound: function(e) {
+    var data = {
+      username: this.state.username,
+      timestamp: e.timestamp,
+      latitude: e.latitude,
+      longitude: e.longitude,
+      altitude: e.altitude,
+      accuracy: e.accuracy,
+      altitudeAccuracy: e.altitudeAccuracy
+    }
+
+    this.socket.emit('user:location', data);
+  },
+
+  handleLocationError: function(e) {
+    this.refs.notifications.show(e);
+  },
+
+  handleChatButtonClick: function() {
+    $('#chat-modal').modal();
+  },
+
+  handleUsersButtonClick: function() {
+    $('#users-modal').modal();
+  },
+
+  handleLocationButtonClick: function() {
+    var user = this.state.users[this.state.username];
+    this.refs.map.zoomTo(user);
+  },
+
+  handleUserButtonClick: function(username) {
+    var user = this.state.users[username];
+    this.refs.map.zoomTo(user);
+  },
+
+  render: function() {
+    return (
+      <div>
+        <NotificationsBar timeout='5000' ref='notifications' />
+        <CustomMapControls onChatButtonClick={this.handleChatButtonClick} onUsersButtonClick={this.handleUsersButtonClick} onLocationButtonClick={this.handleLocationButtonClick} ref='controls' />
+        <Map username={this.state.username} onLocationFound={this.handleLocationFound} onLocationError={this.handleLocationError} pollInterval={this.props.pollInterval} ref='map' />
+        <SignUpModal initialUsername={this.randomName} onSignUp={this.handleSignUp} />
+        <UsersModal users={this.state.users} onClick={this.handleUserButtonClick} />
+        <ChatModal onSendMessage={this.handleSendMessage} ref='chat' />
+      </div>
+    );
   }
 });
 
-function cleanUpMarkers() {
-  var now = new Date().getTime();
+var Map = React.createClass({
+  getInitialState: function() {
+    return {
+      // Flag to indicate the first time got location lock
+      isFirstLock: true
+    };
+  },
 
-  for (var uid in users) {
-    if (now - users[uid].timestamp > 30000) {
-      var marker = users[uid].marker;
-      var circle = users[uid].circle;
+  componentDidMount: function() {
+    // Dynamically resize map to fill the entire screen
+    $(window).resize(function() {
+      $('#map').height($(window).height());
+    });
 
-      map.removeLayer(marker);
-      map.removeLayer(circle);
+    // Trigger resize event only for the first time
+    $(window).trigger('resize');
 
-      delete users[uid];
-      $('#li-' + uid).remove();
+    // Create a map instance, set map center to London
+    var map = this.map = L.map(this.getDOMNode()).setView([51.505, -0.09], 2);
 
-      showAlert(uid + ' has left.');
-    }
-  }
-}
+    // Use OpenStreetMap as tile provider
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
 
-function processLocationHash() {
-  var uid = window.location.hash.split('/')[1];
-  var user = users[uid];
+    // Create custom controls
+    var legend = L.control({
+      position: 'bottomright'
+    });
 
-  if (user) {
+    // Create custom controls container
+    legend.onAdd = function(map) {
+      var div = L.DomUtil.create('div', 'legend-controls');
+      return div;
+    };
+
+    // Add custom controls to map
+    legend.addTo(map);
+    var legendControls = $('.legend-controls');
+    $('#controls').detach().appendTo(legendControls);
+
+    // Prevent map zooming while double-clicking custom controls
+    legendControls.dblclick(L.DomEvent.stopPropagation);
+
+    // Geolocation event handlers
+    map.on('locationfound', this.onLocationFound);
+    map.on('locationerror', this.onLocationError);
+  },
+
+  zoomTo: function(user) {
     var marker = user.marker;
-    var latlng = marker.getLatLng();
-    map.setView(latlng, 16);
+    this.map.setView(marker.getLatLng(), 16);
     marker.openPopup();
-  }
-}
+  },
 
-(function() {
-  window.onhashchange = processLocationHash;
-  setInterval(cleanUpMarkers, 15000);
-  initialize();
-})();
+  addMarker: function(user, data) {
+    var latlng = L.latLng(data.latitude, data.longitude);
+    var radius = data.accuracy / 2;
+
+    var marker = L.marker(latlng).addTo(this.map);
+    var circle = L.circle(latlng, radius).addTo(this.map);
+
+    var map = this.map;
+
+    marker.on('click', function(e) {
+      map.panTo(e.latlng);
+    });
+
+    marker.on('dblclick', function(e) {
+      map.setView(e.latlng, 16);
+    });
+
+    this.bindPopup(marker, data);
+
+    user.marker = marker;
+    user.circle = circle;
+
+    if ((this.state.isFirstLock) && (data.username == this.props.username)) {
+      marker.openPopup();
+      this.setState({isFirstLock: false});
+    }
+  },
+
+  updateMarker: function(user, data) {
+    var latlng = L.latLng(data.latitude, data.longitude);
+    var radius = data.accuracy / 2;
+
+    var existingMarker = user.marker;
+    existingMarker.setLatLng(latlng);
+    this.bindPopup(existingMarker, data);
+
+    var existingCircle = user.circle;
+    existingCircle.setLatLng(latlng);
+    existingCircle.setRadius(radius);
+  },
+
+  removeMarker: function(user) {
+    if (!user) return;
+
+    var marker = user.marker;
+    var circle = user.circle;
+
+    this.map.removeLayer(marker);
+    this.map.removeLayer(circle);
+  },
+
+  bindPopup: function(marker, data) {
+    var html = '<span class="marker-title">' + data.username + '</span><br>LatLng: [' + data.latitude + ', ' + data.longitude + ']<br>Accuracy: ' + data.accuracy + ' m<br>Last updated: ' + $.timeago(data.timestamp);
+    marker.bindPopup(html);
+  },
+
+  locate: function() {
+    this.map.locate({
+      setView: this.state.isFirstLock,
+      maxZoom: 16,
+      enableHighAccuracy: true
+    });
+  },
+
+  onLocationFound: function(e) {
+    this.props.onLocationFound(e);
+    setTimeout(this.locate, this.props.pollInterval);
+  },
+
+  onLocationError: function(e) {
+    this.props.onLocationError(e);
+    setTimeout(this.locate, this.props.pollInterval);
+  },
+
+  render: function() {
+    return (
+      <div id='map'></div>
+    );
+  }
+});
+
+var UserNode = React.createClass({
+  handleClick: function() {
+    this.props.onClick(this.props.name);
+  },
+
+  render: function() {
+    return (
+      <button type='button' className='btn btn-default user-node' onClick={this.handleClick}>{this.props.name}</button>
+    )
+  }
+});
+
+var UserList = React.createClass({
+  getInitialState: function() {
+    return {
+      filter: ""
+    };
+  },
+
+  componentDidMount: function() {
+    // Select input text on focus
+    $('#users-modal').on('shown.bs.modal', function() {
+      $('#input-user-search').focus(function() {
+        $(this).select();
+      });
+    });
+
+    // Webkit text input hack
+    $('input:text').mouseup(function(e) {
+      return false;
+    });
+  },
+
+  handleChange: function(e) {
+    this.setState({filter: e.target.value})
+  },
+
+  handleClick: function(name) {
+    this.props.onClick(name);
+  },
+
+  render: function() {
+    var self = this;
+    var users = this.props.users;
+
+    var userNodes = Object.keys(users).map(function(user) {
+      if (user.indexOf(self.state.filter) > -1) {
+        return (
+          <UserNode name={user} key={user} onClick={self.handleClick} />
+        );
+      } else {
+        return;
+      }
+    });
+
+    return (
+      <div className='userList'>
+        <div className='input-group'>
+          <span className='input-group-addon' id='basic-addon1'>@</span>
+          <input id='input-user-search' type='text' className='form-control' placeholder='Search for...' aria-describedby='basic-addon1' onChange={this.handleChange} />
+        </div>
+        <div className='user-nodes'>
+          {userNodes}
+        </div>
+      </div>
+    );
+  }
+});
+
+var ChatModal = React.createClass({
+  getInitialState: function() {
+    return {
+      messages: []
+    };
+  },
+
+  pushHistory: function(history) {
+    var messages = this.state.messages;
+    var appendedMessages = history.concat(messages);
+    this.setState({messages: appendedMessages});
+
+    var elem = document.getElementById('message-list');
+    elem.scrollTop = elem.scrollHeight;
+  },
+
+  push: function(message) {
+    var messages = this.state.messages;
+    var appendedMessages = messages.concat([message]);
+    this.setState({messages: appendedMessages});
+
+    var elem = document.getElementById('message-list');
+    elem.scrollTop = elem.scrollHeight;
+  },
+
+  handleSubmit: function(message) {
+    this.props.onSendMessage(message);
+  },
+
+  render: function() {
+    return (
+      <div id='chat-modal' tabIndex={-1} role='dialog' aria-labelledby='chat-modal-label' className='modal fade'>
+        <div role='document' className='modal-dialog'>
+          <div className='modal-content'>
+            <div className='modal-header'>
+              <button type='button' className='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>×</span></button>
+              <h4 id='chat-modal-label' className='modal-title'>Chat Room</h4>
+            </div>
+            <div className='modal-body'>
+              <MessageList messages={this.state.messages} />
+              <MessageForm onSubmit={this.handleSubmit} />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+});
+
+var Message = React.createClass({
+  render: function() {
+    return (
+      <div className='message'>
+        <span className='message-sender' title={this.props.timestamp}>{this.props.sender}</span>: {this.props.children}
+      </div>
+    );
+  }
+});
+
+var MessageList = React.createClass({
+  render: function() {
+    var messageNodes = this.props.messages.map(function(message) {
+      return (
+        <Message sender={message.sender} timestamp={message.timestamp}>
+          {message.text}
+        </Message>
+      );
+    });
+    return (
+      <div id='message-list' className='well message-container'>
+        {messageNodes}
+      </div>
+    );
+  }
+});
+
+var MessageForm = React.createClass({
+  handleSubmit: function(e) {
+    e.preventDefault();
+
+    var message = React.findDOMNode(this.refs.message).value.trim();
+    if (!message) { return; }
+
+    this.props.onSubmit(message);
+    React.findDOMNode(this.refs.message).value = '';
+  },
+
+  render: function() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <div className='input-group'>
+          <input id='input-message' type='text' placeholder='Say something...' maxLength={200} aria-describedby='basic-addon1' className='form-control' ref='message' />
+          <span className='input-group-btn'>
+            <input type='submit' className='btn btn-success' defaultValue='Send' />
+          </span>
+        </div>
+      </form>
+    );
+  }
+});
+
+var UsersModal = React.createClass({
+  handleClick: function(name) {
+    $('#users-modal').modal('hide');
+    this.props.onClick(name);
+  },
+
+  render: function() {
+    return (
+      <div id='users-modal' tabIndex={-1} role='dialog' aria-labelledby='users-modal-label' className='modal fade'>
+        <div role='document' className='modal-dialog'>
+          <div className='modal-content'>
+            <div className='modal-header'>
+              <button type='button' className='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>×</span></button>
+              <h4 id='users-modal-label' className='modal-title'>Active Users</h4>
+            </div>
+            <div className='modal-body'>
+              <UserList users={this.props.users} onClick={this.handleClick} />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+});
+
+var SignUpModal = React.createClass({
+  getInitialState: function() {
+    return {username: this.props.initialUsername};
+  },
+
+  componentDidMount: function() {
+    // Select input text on focus
+    $('#signup-modal').on('shown.bs.modal', function() {
+      $('#input-username').focus(function() {
+        $(this).select();
+      });
+    });
+
+    // Webkit text input hack
+    $('input:text').mouseup(function(e) {
+      return false;
+    });
+  },
+
+  handleChange: function(e) {
+    this.setState({username: e.target.value});
+  },
+
+  handleSubmit: function(e) {
+    e.preventDefault();
+
+    var username = this.state.username;
+    if (!username) {return;}
+
+    this.props.onSignUp(username);
+  },
+
+  render: function() {
+    return (
+      <div id='signup-modal' tabIndex={-1} role='dialog' aria-labelledby='signup-modal-label' className='modal fade'>
+        <div role='document' className='modal-dialog'>
+          <div className='modal-content'>
+            <div className='modal-header'>
+              <h4 id='signup-modal-label' className='modal-title'><img src='/img/wadjet.svg' width={33} />&nbsp;&nbsp;Bekti Geolocation Services</h4>
+            </div>
+            <div className='modal-body'>
+              <p>You will need to enable geolocation feature in your browser to be able to share your location with other users.</p>
+              <p>To help the others identify you on the map, please provide a unique name.</p>
+              <form role='form' onSubmit={this.handleSubmit}>
+                <div className='input-group'><span id='basic-addon1' className='input-group-addon'>@</span>
+                  <input id='input-username' type='text' placeholder='Username' maxLength={20} aria-describedby='basic-addon1' className='form-control' value={this.state.username} ref='username' onChange={this.handleChange} />
+                  <span className='input-group-btn'>
+                    <input type='submit' className='btn btn-success' defaultValue='Start' />
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+});
+
+var CustomMapControls = React.createClass({
+  showPopover: function(title, content) {
+    $('#btn-chat').popover({
+      title: title,
+      content: content,
+      placement: 'top',
+      trigger: 'manual'
+    });
+
+    $('#btn-chat').popover('show');
+
+    $('#btn-chat').on('shown.bs.popover', function() {
+      setTimeout(function() {
+        $('#btn-chat').popover('hide');
+      }, 3000);
+    })
+  },
+
+  render: function() {
+    return (
+      <div id='controls'>
+        <button id='btn-chat' type='button' aria-label='Chat' className='btn btn-default btn-custom-controls' onClick={this.props.onChatButtonClick}><span aria-hidden='true' className='glyphicon glyphicon-comment' data-toggle='popover' data-trigger='focus' /></button>
+        <button type='button' aria-label='Active Users' className='btn btn-default btn-custom-controls' onClick={this.props.onUsersButtonClick}><span aria-hidden='true' className='glyphicon glyphicon-user' /></button>
+        <button type='button' aria-label='My Location' className='btn btn-default btn-custom-controls' onClick={this.props.onLocationButtonClick}><span aria-hidden='true' className='glyphicon glyphicon-screenshot' /></button>
+      </div>
+    );
+  }
+});
+
+var NotificationsBar = React.createClass({
+  getInitialState: function() {
+    return {
+      alertTimer: null
+    };
+  },
+
+  show: function(message) {
+    $('#alert').html(message);
+    $('#alert').slideDown();
+
+    clearTimeout(this.state.alertTimer);
+    var alertTimer = setTimeout(this.dismiss, this.props.timeout);
+  },
+
+  dismiss: function() {
+    $('#alert').slideUp();
+  },
+
+  render: function() {
+    return (
+      <div id='alert' role='alert' className='alert alert-warning'>
+      </div>
+    );
+  }
+});
+
+React.render(
+  <Application pollInterval='10000' />, document.getElementById('react-root')
+);

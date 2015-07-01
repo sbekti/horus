@@ -318,9 +318,9 @@ var Map = React.createClass({
     var myLatLng = L.latLng(me.data.latitude, me.data.longitude);
     var otherLatLng = L.latLng(data.latitude, data.longitude);
     var you = data.username == this.props.username ? ' (you)' : '';
-    var distanceTo = data.username == this.props.username ? '' : '<br>Distance to me: ' + otherLatLng.distanceTo(myLatLng) + ' m';
+    var distanceTo = data.username == this.props.username ? '' : '<br>Distance from me: ' + otherLatLng.distanceTo(myLatLng).toFixed(0) + ' m';
 
-    var html = '<span class="marker-title">' + data.username + you + '</span>' + distanceTo + '<br>LatLng: [' + data.latitude + ', ' + data.longitude + ']<br>Accuracy: ' + data.accuracy + ' m<br>Last updated: ' + $.timeago(data.timestamp);
+    var html = '<span class="marker-title">' + data.username + you + '</span>' + distanceTo + '<br>LatLng: [' + data.latitude.toFixed(4) + ', ' + data.longitude.toFixed(4) + ']<br>Accuracy: ' + data.accuracy + ' m<br>Last updated: ' + $.timeago(data.timestamp);
     marker.bindPopup(html);
   },
 

@@ -151,7 +151,7 @@ var Application = React.createClass({
   },
 
   handleLocationError: function(e) {
-    this.refs.notifications.show(e);
+    this.refs.notifications.show(e.message);
   },
 
   handleChatButtonClick: function() {
@@ -326,6 +326,7 @@ var Map = React.createClass({
 
   locate: function() {
     this.map.locate({
+      watch: true,
       setView: this.state.isFirstLock,
       maxZoom: 16,
       enableHighAccuracy: true
@@ -333,13 +334,12 @@ var Map = React.createClass({
   },
 
   onLocationFound: function(e) {
+    console.log('found');
     this.props.onLocationFound(e);
-    setTimeout(this.locate, this.props.pollInterval);
   },
 
   onLocationError: function(e) {
     this.props.onLocationError(e);
-    setTimeout(this.locate, this.props.pollInterval);
   },
 
   render: function() {

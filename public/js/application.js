@@ -60,12 +60,14 @@ var Application = React.createClass({
     }
 
     this.socket.emit('chat:message', data);
+
+    // Optimistic update
+    this.refs.chat.push(data);
   },
 
   handleReceiveMessage: function(data) {
-    this.refs.chat.push(data);
-
     if (data.sender != this.state.username) {
+      this.refs.chat.push(data);
       this.sound.play();
 
       var notification = new Notify(data.sender, {
@@ -310,7 +312,7 @@ var UserNode = React.createClass({
 var UserList = React.createClass({
   getInitialState: function() {
     return {
-      filter: ""
+      filter: ''
     };
   },
 

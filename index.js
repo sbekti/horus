@@ -22,12 +22,19 @@ app.get('/', function(req, res) {
 });
 
 io.on('connection', function (socket) {
+  // Handles initial user list request
+  socket.on('user:list', function() {
+    socket.emit('user:list', users);
+  });
+
+  // Handles user location update
   socket.on('user:location', function(data) {
     users[data.username] = data;
     socket.username = data.username;
     io.emit('user:location', data);
   });
 
+  // Handles chat messages
   socket.on('chat:message', function(data) {
     chatHistory.push(data);
 
@@ -38,15 +45,16 @@ io.on('connection', function (socket) {
     io.emit('chat:message', data);
   });
 
+  // Handles chat history request
   socket.on('chat:history', function() {
     socket.emit('chat:history', chatHistory);
   });
 
+  // Handles user disconnection
   socket.on('disconnect', function() {
     if (socket.username != undefined) {
       delete users[socket.username];
       io.emit('user:disconnect', socket.username);
-      console.log(users);
     }
   });
 });

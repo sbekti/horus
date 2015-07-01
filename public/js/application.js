@@ -8,10 +8,14 @@ var Application = React.createClass({
 
   componentWillMount: function() {
     this.socket = io();
+    this.socket.on('user:list', this.handleInitialUserList);
     this.socket.on('user:location', this.handleLocationUpdate);
     this.socket.on('user:disconnect', this.handleUserDisconnect);
     this.socket.on('chat:message', this.handleReceiveMessage);
     this.socket.on('chat:history', this.handleReceiveChatHistory);
+
+    this.socket.emit('user:list');
+    this.socket.emit('chat:history');
 
     this.sound = new Howl({
       urls: ['/img/sound_a.mp3']
@@ -25,8 +29,6 @@ var Application = React.createClass({
   },
 
   componentDidMount: function() {
-    this.socket.emit('chat:history');
-
     $('#signup-modal').modal({
       backdrop: 'static',
       keyboard: false
@@ -37,7 +39,7 @@ var Application = React.createClass({
     this.setState({username: username});
     this.refs.map.locate();
     $('#signup-modal').modal('hide');
-    this.refs.notifications.show('Signed in as ' + username + '. Retrieving current position...');
+    this.refs.notifications.show('Signed in as ' + username + '. Locating...');
   },
 
   handleUserDisconnect: function(username) {
@@ -86,6 +88,25 @@ var Application = React.createClass({
     this.refs.chat.pushHistory(history);
   },
 
+  handleInitialUserList: function(data) {
+    var users = this.state.users;
+
+    // Update local user list
+    for (var username in data) {
+      var user = data[username];
+
+      var newUser = {
+        data: user,
+        timestamp: new Date().getTime()
+      };
+
+      users[user.username] = newUser;
+      this.refs.map.addMarker(newUser, user);
+    }
+
+    this.setState({users: users});
+  },
+
   handleLocationUpdate: function(data) {
     var users = this.state.users;
     var user = users[data.username];
@@ -96,8 +117,8 @@ var Application = React.createClass({
         timestamp: new Date().getTime()
       };
 
-      this.refs.map.addMarker(newUser, data);
       users[data.username] = newUser;
+      this.refs.map.addMarker(newUser, data);
 
       if (data.username != this.state.username) {
         this.refs.notifications.show(data.username + ' has joined.');
@@ -152,7 +173,7 @@ var Application = React.createClass({
       <div>
         <NotificationsBar timeout='5000' ref='notifications' />
         <CustomMapControls onChatButtonClick={this.handleChatButtonClick} onUsersButtonClick={this.handleUsersButtonClick} onLocationButtonClick={this.handleLocationButtonClick} ref='controls' />
-        <Map username={this.state.username} onLocationFound={this.handleLocationFound} onLocationError={this.handleLocationError} pollInterval={this.props.pollInterval} ref='map' />
+        <Map users={this.state.users} username={this.state.username} onLocationFound={this.handleLocationFound} onLocationError={this.handleLocationError} pollInterval={this.props.pollInterval} ref='map' />
         <SignUpModal initialUsername={this.randomName} onSignUp={this.handleSignUp} />
         <UsersModal users={this.state.users} onClick={this.handleUserButtonClick} />
         <ChatModal onSendMessage={this.handleSendMessage} ref='chat' />
@@ -268,7 +289,25 @@ var Map = React.createClass({
   },
 
   bindPopup: function(marker, data) {
-    var html = '<span class="marker-title">' + data.username + '</span><br>LatLng: [' + data.latitude + ', ' + data.longitude + ']<br>Accuracy: ' + data.accuracy + ' m<br>Last updated: ' + $.timeago(data.timestamp);
+    var me = this.props.users[this.props.username];
+
+    // Sometimes, other user's location got received ahead of ours.
+    // We need our location data to calculate distance information on marker popups.
+    // If we don't have the data yet, use the generic marker popup.
+    // This is also the case if we deny sharing our location.
+    if (!me) {
+      var html = '<span class="marker-title">' + data.username + '</span><br>LatLng: [' + data.latitude + ', ' + data.longitude + ']<br>Accuracy: ' + data.accuracy + ' m<br>Last updated: ' + $.timeago(data.timestamp);
+      marker.bindPopup(html);
+
+      return;
+    }
+
+    var myLatLng = L.latLng(me.data.latitude, me.data.longitude);
+    var otherLatLng = L.latLng(data.latitude, data.longitude);
+    var you = data.username == this.props.username ? ' (you)' : '';
+    var distanceTo = data.username == this.props.username ? '' : '<br>Distance to me: ' + otherLatLng.distanceTo(myLatLng) + ' m';
+
+    var html = '<span class="marker-title">' + data.username + you + '</span>' + distanceTo + '<br>LatLng: [' + data.latitude + ', ' + data.longitude + ']<br>Accuracy: ' + data.accuracy + ' m<br>Last updated: ' + $.timeago(data.timestamp);
     marker.bindPopup(html);
   },
 

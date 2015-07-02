@@ -40,7 +40,6 @@
     "json-loader": "^0.5.2",
     "less": "^2.5.1",
     "less-loader": "^2.2.0",
-    "mapbox": "^0.1.0",
     "node-libs-browser": "^0.5.2",
     "notifyjs": "^1.2.5",
     "sanitize-html": "^1.7.0",

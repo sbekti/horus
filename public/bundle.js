@@ -287,18 +287,22 @@
 	    // }).addTo(map);
 
 	    // Bright theme
-	    // L.tileLayer('https://{s}.tiles.mapbox.com/v4/examples.ra3sdcxr/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IlhHVkZmaW8ifQ.hAMX5hSW-QnTeRCMAy9A8Q', {
-	    //   attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-	    // }).addTo(map);
-
-	    // Pirate theme
-	    L.tileLayer('https://{s}.tiles.mapbox.com/v4/examples.a3cad6da/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IlhHVkZmaW8ifQ.hAMX5hSW-QnTeRCMAy9A8Q&scale=2', {
+	    L.tileLayer('https://{s}.tiles.mapbox.com/v4/examples.ra3sdcxr/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IlhHVkZmaW8ifQ.hAMX5hSW-QnTeRCMAy9A8Q' + (L.Browser.retina ? '&scale=2' : ''), {
 	      detectRetina: true,
 	      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 	    }).addTo(map);
 
+	    // Pirate theme
+	    // L.tileLayer('https://{s}.tiles.mapbox.com/v4/examples.a3cad6da/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IlhHVkZmaW8ifQ.hAMX5hSW-QnTeRCMAy9A8Q'
+	    //   + (L.Browser.retina ? '&scale=2': ''), {
+	    //   detectRetina: true,
+	    //   attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+	    // }).addTo(map);
+
 	    // Dark theme
-	    // L.tileLayer('https://{s}.tiles.mapbox.com/v4/examples.3hqcl3di/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IlhHVkZmaW8ifQ.hAMX5hSW-QnTeRCMAy9A8Q', {
+	    // L.tileLayer('https://{s}.tiles.mapbox.com/v4/examples.3hqcl3di/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IlhHVkZmaW8ifQ.hAMX5hSW-QnTeRCMAy9A8Q'
+	    //   + (L.Browser.retina ? '&scale=2': ''), {
+	    //   detectRetina: true,
 	    //   attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 	    // }).addTo(map);
 

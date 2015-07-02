@@ -229,10 +229,30 @@ var Map = React.createClass({
     // Create a map instance, set map center to London
     var map = this.map = L.map(this.getDOMNode()).setView([51.505, -0.09], 2);
 
-    // Use OpenStreetMap as tile provider
-    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    // // Use OpenStreetMap as tile provider
+    // L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    //   attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    // }).addTo(map);
+
+    // Bright theme
+    // L.tileLayer('https://{s}.tiles.mapbox.com/v4/examples.ra3sdcxr/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IlhHVkZmaW8ifQ.hAMX5hSW-QnTeRCMAy9A8Q', {
+    //   attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    // }).addTo(map);
+
+    // Pirate theme
+    L.tileLayer('https://{s}.tiles.mapbox.com/v4/examples.a3cad6da/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IlhHVkZmaW8ifQ.hAMX5hSW-QnTeRCMAy9A8Q', {
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
+
+    // Dark theme
+    // L.tileLayer('https://{s}.tiles.mapbox.com/v4/examples.3hqcl3di/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IlhHVkZmaW8ifQ.hAMX5hSW-QnTeRCMAy9A8Q', {
+    //   attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    // }).addTo(map);
+
+    // VERY Dark theme
+    // L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
+    //   attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    // }).addTo(map);
 
     // Create custom controls
     var legend = L.control({
@@ -390,14 +410,12 @@ var UserList = React.createClass({
   componentDidMount: function() {
     // Select input text on focus
     $('#users-modal').on('shown.bs.modal', function() {
-      $('#input-user-search').focus(function() {
-        $(this).select();
-      });
-    });
-
-    // Webkit text input hack
-    $('input:text').mouseup(function(e) {
-      return false;
+      // A bug in iOS 8 makes virtual keyboard appears and scrolls page after touch.
+      // A simple solution would be to prevent autofocus at all.
+      if (!/iPad|iPhone|iPod/g.test(navigator.userAgent)) {
+        $('#input-user-search').focus();
+        $('#input-user-search').select();
+      }
     });
   },
 
@@ -450,7 +468,15 @@ var ChatModal = React.createClass({
     $('#chat-modal').on('shown.bs.modal', function() {
       var elem = document.getElementById('message-list');
       elem.scrollTop = elem.scrollHeight;
+
       self.props.onShown();
+
+      // A bug in iOS 8 makes virtual keyboard appears and scrolls page after touch.
+      // A simple solution would be to prevent autofocus at all.
+      if (!/iPad|iPhone|iPod/g.test(navigator.userAgent)) {
+        $('#input-message').focus();
+        $('#input-message').select();
+      };
     });
 
     $('#chat-modal').on('hidden.bs.modal', function() {
@@ -597,14 +623,12 @@ var SignUpModal = React.createClass({
   componentDidMount: function() {
     // Select input text on focus
     $('#signup-modal').on('shown.bs.modal', function() {
-      $('#input-username').focus(function() {
-        $(this).select();
-      });
-    });
-
-    // Webkit text input hack
-    $('input:text').mouseup(function(e) {
-      return false;
+      // A bug in iOS 8 makes virtual keyboard appears and scrolls page after touch.
+      // A simple solution would be to prevent autofocus at all.
+      if (!/iPad|iPhone|iPod/g.test(navigator.userAgent)) {
+        $('#input-username').focus();
+        $('#input-username').select();
+      };
     });
   },
 

@@ -1,5 +1,4 @@
-var nameGenerator = {
-  adjectives: [
+var adjectives = [
     'accurate', 'abundant', 'addicted', 'adorable', 'adventurous', 'afraid', 'aggressive', 'agreeable', 'alcoholic', 'alert',
     'aloof', 'ambitious', 'amused', 'ancient', 'angry', 'animated', 'annoyed', 'annoying', 'anxious', 'arrogant', 'ashamed',
     'attractive', 'auspicious', 'average', 'awesome', 'awful', 'bad', 'bashful', 'beautiful', 'belligerent', 'beneficial', 'best',
@@ -35,8 +34,9 @@ var nameGenerator = {
     'untidy', 'upset', 'uptight', 'vast', 'victorious', 'violent', 'vivacious', 'voiceless', 'vulgar', 'warm', 'wasteful', 'watery',
     'weak', 'wealthy', 'weary', 'wet', 'whispering', 'wicked', 'wide', 'wide-eyed', 'wise', 'witty', 'wonderful', 'wooden', 'worried',
     'yellow', 'young', 'youthful', 'yummy', 'zany', 'zealous'
-  ],
-  animals: [
+  ];
+
+var animals = [
     'aardvark', 'alligator', 'anteater', 'antelope', 'ape', 'armadillo', 'baboon', 'badger', 'bat', 'bear', 'beaver',
     'bighorn', 'bison', 'boar', 'buffalo', 'bull', 'bunny', 'camel', 'canary', 'cat', 'chameleon', 'cheetah', 'chimpanzee',
     'chinchilla', 'chipmunk', 'colt', 'cougar', 'cow', 'coyote', 'crocodile', 'crow', 'deer', 'dingo', 'doe', 'dog', 'donkey',
@@ -48,11 +48,11 @@ var nameGenerator = {
     'raccoon', 'ram', 'rat', 'reindeer', 'rhinoceros', 'roebuck', 'salamander', 'seal', 'sheep', 'shrew', 'silver fox', 'skunk',
     'sloth', 'snake', 'squirrel', 'stallion', 'tiger', 'toad', 'turtle', 'walrus', 'warthog', 'waterbuck', 'weasel', 'whale',
     'wildcat', 'wolf', 'wombat', 'yak', 'yetti', 'zebra'
-  ],
-  getRandomName: function() {
-    var adjective = this.adjectives[Math.floor(Math.random() * this.adjectives.length)];
-    var animal = this.animals[Math.floor(Math.random() * this.animals.length)];
+  ]; 
 
-    return (adjective + ' ' + animal).split(' ').join('-');
-  }
+exports.generate = function() {
+  var adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
+  var animal = animals[Math.floor(Math.random() * animals.length)];
+
+  return (adjective + ' ' + animal).split(' ').join('-');
 }

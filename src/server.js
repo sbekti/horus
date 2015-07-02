@@ -1,6 +1,7 @@
 var express = require('express');
 var socketio = require('socket.io');
 var favicon = require('serve-favicon');
+var sanitizeHtml = require('sanitize-html');
 var http = require('http');
 var path = require('path');
 
@@ -10,12 +11,16 @@ var io = require('socket.io').listen(server);
 
 var users = {};
 var chatHistory = [];
+var maxHistorySize = 256;
+var maxMessageLength = 256;
+
+app.set('port', (process.env.PORT || 5000))
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-app.use(favicon(__dirname + '/public/favicon/favicon.ico'));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(favicon(__dirname + '/../public/favicon/favicon.ico'));
+app.use(express.static(path.join(__dirname, '/../public')));
 
 app.get('/', function(req, res) {
   res.render('index');
@@ -36,9 +41,15 @@ io.on('connection', function (socket) {
 
   // Handles chat messages
   socket.on('chat:message', function(data) {
+    data.text = data.text.substring(0, maxMessageLength);
+    data.text = sanitizeHtml(data.text, {
+      allowedTags: [],
+      allowedAttributes: {}
+    });
+
     chatHistory.push(data);
 
-    if (chatHistory.length > 200) {
+    if (chatHistory.length > maxHistorySize) {
       chatHistory.shift();
     }
 
@@ -59,4 +70,6 @@ io.on('connection', function (socket) {
   });
 });
 
-server.listen(5000);
+server.listen(app.get('port'), function() {
+  console.log('Node app is running at localhost:' + app.get('port'))
+})

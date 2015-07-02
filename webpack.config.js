@@ -15,11 +15,11 @@ module.exports = {
   module: {
     loaders: [{
       test: /\.jsx?$/,
-      exclude: /(node_modules|bower_components)/,
+      exclude: /(node_modules)/,
       loader: 'babel'
     }, {
-      test: /\.scss$/,
-      loader: 'style!css!sass'
+      test: /\.less$/,
+      loader: 'style!css!less'
     }, {
       test: /\.gif$/,
       loader: 'url?limit=10000&mimetype=image/gif'
@@ -44,7 +44,15 @@ module.exports = {
     }, {
       test: /\.svg$/,
       loader: 'file?mimetype=image/svg+xml'
+    }, {
+      test: /\.json$/,
+      loader: 'json'
     }]
+  },
+  externals: {
+    'react': 'React',
+    'jquery': 'jQuery',
+    'leaflet': 'L'
   },
   output: {
     path: path.join(__dirname, 'public'),
@@ -56,6 +64,11 @@ module.exports = {
       jQuery: 'jquery',
       'window.jQuery': 'jquery',
       'root.jQuery': 'jquery'
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
     })
   ]
 }

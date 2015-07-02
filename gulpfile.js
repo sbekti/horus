@@ -2,12 +2,8 @@ var gulp = require('gulp');
 var del = require('del');
 var webpack = require('webpack');
 
-var path = {
-  PUBLIC: './public',
-};
-
 gulp.task('clean', function(cb) {
-  del['public'], cb);
+  del(['public/bundle.js'], cb);
 });
 
 gulp.task('webpack', function(done) {
@@ -20,4 +16,5 @@ gulp.task('webpack', function(done) {
     done();
   });
 });  
+
 gulp.task('default', ['clean', 'webpack']);

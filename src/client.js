@@ -1,3 +1,17 @@
+require('bootstrap-webpack');
+require('./styles/style.less');
+
+var React = require('react');
+var Notify = require('notifyjs');
+var Howler = require('howler');
+var sanitizeHtml = require('sanitize-html');
+var Autolinker = require('autolinker');
+var Polyname = require('./lib/polyname');
+
+var autolinker = new Autolinker({
+  twitter: false
+});
+
 var Application = React.createClass({
   getInitialState: function() {
     return {
@@ -26,7 +40,7 @@ var Application = React.createClass({
       Notify.requestPermission();
     }
 
-    this.randomName = nameGenerator.getRandomName();
+    this.randomName = Polyname.generate();
   },
 
   componentDidMount: function() {
@@ -493,9 +507,16 @@ var ChatModal = React.createClass({
 
 var Message = React.createClass({
   render: function() {
+    var rawMarkup = sanitizeHtml(this.props.children.toString(), {
+      allowedTags: [],
+      allowedAttributes: {}
+    });
+
+    rawMarkup = autolinker.link(rawMarkup);
+
     return (
       <div className='message'>
-        <span className='message-sender' title={this.props.timestamp}>{this.props.sender}</span>: {this.props.children}
+        <span className='message-sender' title={this.props.timestamp}>{this.props.sender}</span>: <span dangerouslySetInnerHTML={{__html: rawMarkup}}></span>
       </div>
     );
   }

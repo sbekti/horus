@@ -14,7 +14,7 @@ var chatHistory = [];
 var maxHistorySize = 256;
 var maxMessageLength = 256;
 
-app.set('port', (process.env.PORT || 5000))
+app.set('port', (process.env.PORT || 5000));
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -70,6 +70,6 @@ io.on('connection', function (socket) {
   });
 });
 
-server.listen(app.get('port'), function() {
-  console.log('Node app is running at localhost:' + app.get('port'))
-})
+server.listen(app.get('port'), function () {
+  console.log('Server running on port ' + app.get('port'));
+});

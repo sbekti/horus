@@ -1,17 +1,19 @@
 var gulp = require('gulp');
+var gutil = require('gulp-util');
 var del = require('del');
 var webpack = require('webpack');
+var webpackConfig = require('./webpack.config.js');
 
-gulp.task('clean', function(cb) {
-  del(['public/bundle.js'], cb);
+gulp.task('clean', function(done) {
+  del(['public/bundle.js'], done);
 });
 
 gulp.task('webpack', function(done) {
-  webpack(require('./webpack.config.js')).run(function(err, stats) {
+  webpack(webpackConfig).run(function(err, stats) {
     if (err) {
-      console.log('Error', err);
+      gutil.log('Error', err);
     } else {
-      console.log(stats.toString());
+      gutil.log(stats.toString());
     }
     done();
   });

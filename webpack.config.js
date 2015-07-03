@@ -1,7 +1,7 @@
 var webpack = require('webpack');
 var path = require('path');
 
-module.exports = {
+var config = {
   entry: {
     main: './src/client.js'
   },
@@ -65,10 +65,12 @@ module.exports = {
       'window.jQuery': 'jquery',
       'root.jQuery': 'jquery'
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
-      }
-    })
+    // new webpack.optimize.UglifyJsPlugin({
+    //   compress: {
+    //     warnings: false
+    //   }
+    // })
   ]
 }
+
+module.exports = config;

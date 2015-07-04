@@ -12,8 +12,7 @@ var NavButtonCollection = React.createClass({
 
   handleLocateButtonClick: function(e) {
     e.preventDefault();
-    var user = this.props.users[this.props.username];
-    this.zoomTo(user);
+    this.props.onLocateButtonClick();
   },
 
   handleUserListButtonClick: function(e) {
@@ -24,14 +23,6 @@ var NavButtonCollection = React.createClass({
   handleMessageButtonClick: function(e) {
     e.preventDefault();
     this.props.onMessageButtonClick();
-  },
-
-  incrementBubble: function() {
-    this.refs.notificationBubble.increment();
-  },
-
-  resetBubble: function() {
-    this.refs.notificationBubble.reset();
   },
 
   showPopover: function(title, content) {
@@ -50,24 +41,30 @@ var NavButtonCollection = React.createClass({
     })
   },
 
+  incrementBubble: function() {
+    this.refs.notificationBubble.increment();
+  },
+
+  resetBubble: function() {
+    this.refs.notificationBubble.reset();
+  },
+
   render: function() {
     return (
-      <div ref='map' className='map'>
-        <div ref='nav' className='horus-nav'>
-          <NotificationBubble ref='notificationBubble' />
-          <div ref='locateButton' onClick={this.handleLocateButtonClick} className='leaflet-bar leaflet-control horus-nav-button' aria-haspopup='true'>
-            <a href='#'><span className='glyphicon glyphicon-screenshot'></span></a>
-          </div>
-          <div ref='userListButton' onClick={this.handleUserListButtonClick} className='leaflet-bar leaflet-control horus-nav-button' aria-haspopup='true'>
-            <a href='#'><span className='glyphicon glyphicon-user'></span></a>
-          </div>
-          <div ref='messageButton' onClick={this.handleMessageButtonClick} className='leaflet-bar leaflet-control horus-nav-button' aria-haspopup='true'>
-            <a href='#'><span className='glyphicon glyphicon-comment'></span></a>
-          </div>
+      <div className='horus-nav'>
+        <NotificationBubble ref='notificationBubble' />
+        <div ref='locateButton' onClick={this.handleLocateButtonClick} className='leaflet-bar leaflet-control horus-nav-button' aria-haspopup='true'>
+          <a href='#'><span className='glyphicon glyphicon-screenshot'></span></a>
+        </div>
+        <div ref='userListButton' onClick={this.handleUserListButtonClick} className='leaflet-bar leaflet-control horus-nav-button' aria-haspopup='true'>
+          <a href='#'><span className='glyphicon glyphicon-user'></span></a>
+        </div>
+        <div ref='messageButton' onClick={this.handleMessageButtonClick} className='leaflet-bar leaflet-control horus-nav-button' aria-haspopup='true'>
+          <a href='#'><span className='glyphicon glyphicon-comment'></span></a>
         </div>
       </div>
     );
   }
 });
 
-module.exports = Map;
+module.exports = NavButtonCollection;

@@ -1,5 +1,5 @@
 var React = require('react');
-var NotificationBubble = require('./NotificationBubble');
+var NavButtonCollection = require('./NavButtonCollection');
 
 var Map = React.createClass({
   getInitialState: function() {
@@ -27,19 +27,28 @@ var Map = React.createClass({
     });
 
     L.control.layers({
-      'Mapbox Streets': L.mapbox.tileLayer('mapbox.streets').addTo(map),
-      'Mapbox OSM Bright 2': L.mapbox.tileLayer('mapbox.osm-bright'),
-      'Mapbox Dark': L.mapbox.tileLayer('mapbox.dark')
+      'Mapbox OSM Bright 2': L.mapbox.tileLayer('mapbox.osm-bright').addTo(map),
+      'Mapbox Streets': L.mapbox.tileLayer('mapbox.streets'),
+      'Mapbox Streets Satellite': L.mapbox.tileLayer('mapbox.streets-satellite'),
+      'Mapbox Satellite': L.mapbox.tileLayer('mapbox.satellite'),
+      'Mapbox Light': L.mapbox.tileLayer('mapbox.light'),
+      'Mapbox Dark': L.mapbox.tileLayer('mapbox.dark'),
+      'Mapbox Pirates': L.mapbox.tileLayer('mapbox.pirates'),
+      'Mapbox Comic': L.mapbox.tileLayer('mapbox.comic'),
+      'Mapbox Wheatpaste': L.mapbox.tileLayer('mapbox.wheatpaste'),
+      'OpenStreetMap': L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png'),
+      'Stamen Toner': L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png'),
+      'Stamen Watercolor': L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.png')
     }).addTo(map);
 
-    var nav = React.findDOMNode(this.refs.nav);
+    var navButtonCollection = React.findDOMNode(this.refs.navButtonCollection);
 
     var legend = L.control({
       position: 'bottomright'
     });
 
     legend.onAdd = function(map) {
-      return nav;
+      return navButtonCollection;
     };
 
     legend.addTo(map);
@@ -47,12 +56,6 @@ var Map = React.createClass({
     // Geolocation event handlers
     map.on('locationfound', this.onLocationFound);
     map.on('locationerror', this.onLocationError);
-
-    var messageButton = React.findDOMNode(this.refs.messageButton);
-    $(messageButton).popover({
-      placement: 'top',
-      trigger: 'manual'
-    });
   },
 
   zoomTo: function(user) {
@@ -164,60 +167,34 @@ var Map = React.createClass({
   },
 
   handleLocateButtonClick: function(e) {
-    e.preventDefault();
     var user = this.props.users[this.props.username];
     this.zoomTo(user);
   },
 
   handleUserListButtonClick: function(e) {
-    e.preventDefault();
     this.props.onUserListButtonClick();
   },
 
   handleMessageButtonClick: function(e) {
-    e.preventDefault();
     this.props.onMessageButtonClick();
   },
 
   incrementBubble: function() {
-    this.refs.notificationBubble.increment();
+    this.refs.navButtonCollection.incrementBubble();
   },
 
   resetBubble: function() {
-    this.refs.notificationBubble.reset();
+    this.refs.navButtonCollection.resetBubble();
   },
 
   showPopover: function(title, content) {
-    var messageButton = React.findDOMNode(this.refs.messageButton);
-    var popover = $(messageButton).data('bs.popover');
-    popover.options.title = title;
-    popover.options.content = content;
-    $(messageButton).popover('show');
-
-    $(messageButton).on('shown.bs.popover', function() {
-      clearTimeout(this.popupTimer);
-
-      this.popupTimer = setTimeout(function() {
-        $(messageButton).popover('hide');
-      }, 3000);
-    })
+    this.refs.navButtonCollection.showPopover(title, content);
   },
 
   render: function() {
     return (
       <div ref='map' className='map'>
-        <div ref='nav' className='horus-nav'>
-          <NotificationBubble ref='notificationBubble' />
-          <div ref='locateButton' onClick={this.handleLocateButtonClick} className='leaflet-bar leaflet-control horus-nav-button' aria-haspopup='true'>
-            <a href='#'><span className='glyphicon glyphicon-screenshot'></span></a>
-          </div>
-          <div ref='userListButton' onClick={this.handleUserListButtonClick} className='leaflet-bar leaflet-control horus-nav-button' aria-haspopup='true'>
-            <a href='#'><span className='glyphicon glyphicon-user'></span></a>
-          </div>
-          <div ref='messageButton' onClick={this.handleMessageButtonClick} className='leaflet-bar leaflet-control horus-nav-button' aria-haspopup='true'>
-            <a href='#'><span className='glyphicon glyphicon-comment'></span></a>
-          </div>
-        </div>
+        <NavButtonCollection ref='navButtonCollection' onLocateButtonClick={this.handleLocateButtonClick} onUserListButtonClick={this.handleUserListButtonClick} onMessageButtonClick={this.handleMessageButtonClick} />
       </div>
     );
   }

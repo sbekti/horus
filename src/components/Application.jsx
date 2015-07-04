@@ -62,7 +62,7 @@ var Application = React.createClass({
     this.refs.notificationBar.show(username + ' has left.');
   },
 
-  handleSendMessage: function(text) {
+  handleSubmitMessage: function(text) {
     var data = {
       sender: this.state.username,
       text: text,
@@ -89,10 +89,8 @@ var Application = React.createClass({
       notification.show();
 
       if (!this.state.isMessageBoxOpen) {
-        /*
-        this.refs.controls.incrementBubble();
-        this.refs.controls.showPopover(data.sender, data.text);
-        */
+        this.refs.map.incrementBubble();
+        this.refs.map.showPopover(data.sender, data.text);
       }
     }
   },
@@ -163,49 +161,36 @@ var Application = React.createClass({
     this.refs.notificationBar.show(e.message);
   },
 
-  handleUserButtonClick: function(username) {
+  handleUserSelect: function(username) {
     var user = this.state.users[username];
     this.refs.map.zoomTo(user);
   },
 
-  /*
-
-  handleChatButtonClick: function() {
-    $('#chat-modal').modal();
+  handleMessageButtonClick: function() {
+    this.refs.messageBox.showModal();
   },
 
-  handleUsersButtonClick: function() {
-    $('#users-modal').modal();
+  handleUserListButtonClick: function() {
+    this.refs.userBox.showModal();
   },
-
-  handleLocationButtonClick: function() {
-    var user = this.state.users[this.state.username];
-    this.refs.map.zoomTo(user);
-  },
-
-  */
 
   handleMessageBoxShown: function() {
     this.setState({ isMessageBoxOpen: true });
-    /*
-    this.refs.controls.resetBubble();
-    */
+    this.refs.map.resetBubble();
   },
 
   handleMessageBoxHidden: function() {
     this.setState({ isMessageBoxOpen: false });
   },
 
-  //<CustomMapControls onChatButtonClick={this.handleChatButtonClick} onUsersButtonClick={this.handleUsersButtonClick} onLocationButtonClick={this.handleLocationButtonClick} ref='controls' />
-
   render: function() {
     return (
       <div>
         <NotificationBar ref='notificationBar' timeout='5000' />
-        <Map ref='map' users={this.state.users} username={this.state.username} onLocationFound={this.handleLocationFound} onLocationError={this.handleLocationError} />
+        <Map ref='map' users={this.state.users} username={this.state.username} onLocationFound={this.handleLocationFound} onLocationError={this.handleLocationError} onMessageButtonClick={this.handleMessageButtonClick} onUserListButtonClick={this.handleUserListButtonClick} />
         <SignUpBox ref='signUpBox' initialUsername={this.randomName} onUserSignUp={this.handleUserSignUp} />
         <UserBox ref='userBox' users={this.state.users} onUserSelect={this.handleUserSelect} />
-        <MessageBox ref='messageBox' onShown={this.handleMessageBoxShown} onHidden={this.handleMessageBoxHidden} onMessageSubmit={this.handleMessageSubmit} />
+        <MessageBox ref='messageBox' onShown={this.handleMessageBoxShown} onHidden={this.handleMessageBoxHidden} onSubmitMessage={this.handleSubmitMessage} />
       </div>
     );
   }

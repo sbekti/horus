@@ -1,48 +1,62 @@
-@import "easy-button";
-
-html, body {
-    height: 100%;
-    width: 100%;
+html,
+body {
+  height: 100%;
+  width: 100%;
 }
 .marker-title {
-    font-weight: bold;
-    font-size: 18px;
+  font-weight: bold;
+  font-size: 18px;
+}
+.user-list {
+  margin-top: 10px;
+}
+.user {
+  margin-right: 5px;
+  margin-top: 5px;
 }
 .message-sender {
-    font-weight: bold;
+  font-weight: bold;
 }
-.user-nodes {
-    margin-top: 10px;
-}
-.user-node {
-    margin-right: 5px;
-    margin-top: 5px;
-}
-.btn-custom-controls {
-    margin-left: 5px;
-}
-.message-container {
-    max-height: 200px;
-    overflow: auto;
+.message-list {
+  max-height: 200px;
+  overflow: auto;
 }
 .notification-bar {
-    display: none;
-    position: absolute;
-    z-index: 101;
-    top: 0;
-    right: 0;
-    left: 0;
-    text-align: center;
+  display: none;
+  position: absolute;
+  z-index: 101;
+  top: 0;
+  right: 0;
+  left: 0;
+  text-align: center;
 }
 .notification-bubble {
-    position: absolute;
-    top: -6px;
-    right: 95px;
-    padding: 1px 3px 1px 3px;
-    background-color: red;
-    color: white;
-    font-weight: bold;
-    font-size: 0.8em;
-    border-radius: 30px;
-    box-shadow: 1px 1px 1px gray;
+  position: absolute;
+  top: -6px;
+  right: 75px;
+  padding: 0px 3px;
+  background-color: red;
+  color: white;
+  font-weight: bold;
+  font-size: 0.8em;
+  border-radius: 30px;
+  box-shadow: 1px 1px 1px gray;
+  line-height: 1.5;
+  z-index: 1000;
+}
+.popover > .popover-title {
+  margin-bottom: 0;
+}
+.horus-nav > .horus-nav-button {
+  margin-left: 10px;
+  margin-right: 0;
+  margin-bottom: 0;
+  line-height: 26px;
+  text-align: center;
+  text-decoration: none;
+  color: black;
+  clear: none;
+}
+.horus-nav > .horus-nav-button a {
+  color: black;
 }

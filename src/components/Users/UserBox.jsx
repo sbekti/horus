@@ -4,9 +4,10 @@ var UserList = require('./UserList');
 
 var UserBox = React.createClass({
   componentDidMount: function() {
+    var self = this;
     var modal = React.findDOMNode(this.refs.modal);
     $(modal).on('shown.bs.modal', function() {
-      this.refs.userSearchForm.focusInput();
+      self.refs.userSearchForm.focusInput();
     });
   },
 

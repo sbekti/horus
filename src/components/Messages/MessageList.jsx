@@ -3,8 +3,14 @@ var Message = require('./Message');
 
 var MessageList = React.createClass({
   scrollToBottom: function() {
-    var messageList = React.findDOMNode(this.refs.messageList);
+    var self = this;
+    var messageList = React.findDOMNode(self.refs.messageList);
     messageList.scrollTop = messageList.scrollHeight;
+
+    // HACK HACK
+    setTimeout(function() {
+      messageList.scrollTop = messageList.scrollHeight;
+    }, 1);
   },
 
   render: function() {

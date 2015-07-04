@@ -12,8 +12,8 @@ var MessageBox = React.createClass({
     var modal = React.findDOMNode(this.refs.modal);
 
     $(modal).on('shown.bs.modal', function() {
-      this.refs.messageList.scrollToBottom();
-      this.refs.messageForm.focusInput();
+      self.refs.messageList.scrollToBottom();
+      self.refs.messageForm.focusInput();
       self.props.onShown();
     });
 
@@ -36,9 +36,9 @@ var MessageBox = React.createClass({
     this.refs.messageList.scrollToBottom();
   },
 
-  handleMessageSubmit: function(message) {
+  handleSubmitMessage: function(message) {
     this.refs.messageList.scrollToBottom();
-    this.props.onMessageSubmit(message);
+    this.props.onSubmitMessage(message);
   },
 
   showModal: function() {
@@ -57,7 +57,7 @@ var MessageBox = React.createClass({
             </div>
             <div className='modal-body'>
               <MessageList ref='messageList' messages={this.state.messages} />
-              <MessageForm ref='messageForm' onSubmit={this.handleMessageSubmit} />
+              <MessageForm ref='messageForm' onSubmit={this.handleSubmitMessage} />
             </div>
           </div>
         </div>

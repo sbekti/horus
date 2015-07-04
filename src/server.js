@@ -12,7 +12,7 @@ var io = require('socket.io').listen(server);
 
 var users = {};
 var messages = [];
-var maxHistorySize = 256;
+var maxHistorySize = 512;
 var maxMessageLength = 256;
 
 app.set('port', (process.env.PORT || 5000));
@@ -36,6 +36,11 @@ app.get('/messages', function(req, res) {
 app.post('/messages', function(req, res) {
   messages = req.body;
   res.json(messages);
+});
+
+app.get('/messages/clear', function(req, res) {
+  messages = [];
+  res.send('OK');
 });
 
 io.on('connection', function (socket) {

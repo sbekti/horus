@@ -2,6 +2,7 @@ var express = require('express');
 var socketio = require('socket.io');
 var favicon = require('serve-favicon');
 var xssFilters = require('xss-filters');
+var bodyParser = require('body-parser')
 var http = require('http');
 var path = require('path');
 
@@ -10,11 +11,13 @@ var server = http.createServer(app);
 var io = require('socket.io').listen(server);
 
 var users = {};
-var chatHistory = [];
+var messages = [];
 var maxHistorySize = 256;
 var maxMessageLength = 256;
 
 app.set('port', (process.env.PORT || 5000));
+
+app.use(bodyParser.json());
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -24,6 +27,15 @@ app.use(express.static(path.join(__dirname, '/../public')));
 
 app.get('/', function(req, res) {
   res.render('index');
+});
+
+app.get('/messages', function(req, res) {
+  res.json(messages);
+});
+
+app.post('/messages', function(req, res) {
+  messages = req.body;
+  res.json(messages);
 });
 
 io.on('connection', function (socket) {
@@ -44,10 +56,10 @@ io.on('connection', function (socket) {
     data.text = data.text.substring(0, maxMessageLength);
     data.text = xssFilters.inHTMLData(data.text);
 
-    chatHistory.push(data);
+    messages.push(data);
 
-    if (chatHistory.length > maxHistorySize) {
-      chatHistory.shift();
+    if (messages.length > maxHistorySize) {
+      messages.shift();
     }
 
     io.emit('chat:message', data);
@@ -55,7 +67,7 @@ io.on('connection', function (socket) {
 
   // Handles chat history request
   socket.on('chat:history', function() {
-    socket.emit('chat:history', chatHistory);
+    socket.emit('chat:history', messages);
   });
 
   // Handles user disconnection

@@ -18,6 +18,7 @@
     "npm": "^2.12.0"
   },
   "dependencies": {
+    "body-parser": "^1.13.1",
     "express": "^4.13.0",
     "http": "0.0.0",
     "jade": "^1.11.0",

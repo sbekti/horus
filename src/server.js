@@ -1,7 +1,7 @@
 var express = require('express');
 var socketio = require('socket.io');
 var favicon = require('serve-favicon');
-var sanitizeHtml = require('sanitize-html');
+var xssFilters = require('xss-filters');
 var http = require('http');
 var path = require('path');
 
@@ -42,10 +42,7 @@ io.on('connection', function (socket) {
   // Handles chat messages
   socket.on('chat:message', function(data) {
     data.text = data.text.substring(0, maxMessageLength);
-    data.text = sanitizeHtml(data.text, {
-      allowedTags: [],
-      allowedAttributes: {}
-    });
+    data.text = xssFilters.inHTMLData(data.text);
 
     chatHistory.push(data);
 

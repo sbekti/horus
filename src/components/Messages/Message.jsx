@@ -1,5 +1,5 @@
 var React = require('react');
-var SanitizeHtml = require('sanitize-html');
+var xssFilters = require('xss-filters');
 var Autolinker = require('autolinker');
 
 var autolinker = new Autolinker({
@@ -8,11 +8,7 @@ var autolinker = new Autolinker({
 
 var Message = React.createClass({
   render: function() {
-    var rawMarkup = SanitizeHtml(this.props.children.toString(), {
-      allowedTags: [],
-      allowedAttributes: {}
-    });
-
+    var rawMarkup = xssFilters.inHTMLData(this.props.children.toString());
     rawMarkup = autolinker.link(rawMarkup);
 
     return (

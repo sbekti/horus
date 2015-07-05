@@ -16,12 +16,10 @@ var maxHistorySize = 512;
 var maxMessageLength = 256;
 
 app.set('port', (process.env.PORT || 5000));
-
-app.use(bodyParser.json());
-
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+app.use(bodyParser.json());
 app.use(favicon(__dirname + '/../public/favicon/favicon.ico'));
 app.use(express.static(path.join(__dirname, '/../public')));
 
@@ -44,6 +42,16 @@ app.get('/messages/clear', function(req, res) {
 });
 
 io.on('connection', function (socket) {
+  // Handles username validity check
+  socket.on('user:validate', function(username) {
+    var user = users[username];
+    var data = {
+      'username': username,
+      'valid': !user
+    };
+    socket.emit('user:validate', data);
+  });
+
   // Handles initial user list request
   socket.on('user:list', function() {
     socket.emit('user:list', users);

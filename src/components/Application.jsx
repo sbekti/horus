@@ -21,6 +21,7 @@ var Application = React.createClass({
   componentWillMount: function() {
     this.socket = io();
 
+    this.socket.on('user:validate', this.handleReceiveUserValidationResult);
     this.socket.on('user:list', this.handleReceiveInitialUserList);
     this.socket.on('user:location', this.handleReceiveLocationUpdate);
     this.socket.on('user:disconnect', this.handleUserDisconnect);
@@ -46,9 +47,18 @@ var Application = React.createClass({
   },
 
   handleUserSignUp: function(username) {
-    this.setState({ username: username });
-    this.refs.notificationBar.show('Signed in as ' + username + '. Getting current location...');
-    this.refs.map.locate();
+    this.socket.emit('user:validate', username);
+  },
+
+  handleReceiveUserValidationResult: function(data) {
+    if (data.valid) {
+      this.refs.signUpBox.hideModal();
+      this.setState({ username: data.username });
+      this.refs.notificationBar.show('Signed in as ' + data.username + '. Locating...');
+      this.refs.map.locate();
+    } else {
+      this.refs.signUpBox.showAlert('Username is already in use. Please choose a different username.');
+    }
   },
 
   handleUserDisconnect: function(username) {

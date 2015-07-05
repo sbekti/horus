@@ -12,9 +12,7 @@ var UserBox = React.createClass({
   },
 
   handleUserSelect: function(username) {
-    var modal = React.findDOMNode(this.refs.modal);
-    $(modal).modal('hide');
-
+    this.hideModal();
     this.props.onUserSelect(username);
   },
 
@@ -29,6 +27,11 @@ var UserBox = React.createClass({
   showModal: function() {
     var modal = React.findDOMNode(this.refs.modal);
     $(modal).modal();
+  },
+
+  hideModal: function() {
+    var modal = React.findDOMNode(this.refs.modal);
+    $(modal).modal('hide');
   },
 
   render: function() {

@@ -19,4 +19,8 @@ gulp.task('webpack', function(done) {
   });
 });  
 
-gulp.task('default', ['clean', 'webpack']);
+gulp.task('watch', function(done) {
+  gulp.watch('src/**/*', ['webpack']);
+});  
+
+gulp.task('default', ['clean', 'webpack', 'watch']);

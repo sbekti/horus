@@ -38,6 +38,7 @@
     "file-loader": "^0.8.4",
     "gulp": "^3.9.0",
     "gulp-util": "^3.0.6",
+    "gulp-watch": "^4.2.4",
     "howler": "^1.1.26",
     "json-loader": "^0.5.2",
     "less": "^2.5.1",

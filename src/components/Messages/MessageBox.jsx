@@ -46,6 +46,11 @@ var MessageBox = React.createClass({
     $(modal).modal();
   },
 
+  hideModal: function() {
+    var modal = React.findDOMNode(this.refs.modal);
+    $(modal).modal('hide');
+  },
+
   render: function() {
     return (
       <div ref='modal' tabIndex={-1} role='dialog' className='message-box modal fade'>

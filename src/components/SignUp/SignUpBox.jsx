@@ -11,9 +11,6 @@ var SignUpBox = React.createClass({
   },
 
   handleSignUpFormSubmit: function(username) {
-    var modal = React.findDOMNode(this.refs.modal);
-    $(modal).modal('hide');
-
     this.props.onUserSignUp(username);
   },
 
@@ -23,6 +20,15 @@ var SignUpBox = React.createClass({
       backdrop: 'static',
       keyboard: false
     });
+  },
+
+  hideModal: function() {
+    var modal = React.findDOMNode(this.refs.modal);
+    $(modal).modal('hide');
+  },
+
+  showAlert: function(message) {
+    this.refs.signUpForm.showAlert(message);
   },
 
   render: function() {

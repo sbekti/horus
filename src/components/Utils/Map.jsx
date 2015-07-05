@@ -148,7 +148,7 @@ var Map = React.createClass({
     // If we don't have the data yet, use the generic marker popup.
     // This is also the case if we deny sharing our location.
     if (!me) {
-      var html = '<span class="marker-title">' + username + '</span><br>LatLng: [' + user.data.latitude.toFixed(4) + ', ' + user.data.longitude.toFixed(4) + ']<br>Accuracy: ' + user.data.accuracy + ' m<br>Last updated: ' + $.timeago(user.data.timestamp);
+      var html = '<span class="marker-title">' + username + '</span><br>LatLng: [' + user.data.latitude.toFixed(4) + ', ' + user.data.longitude.toFixed(4) + ']<br>Accuracy: ' + user.data.accuracy.toFixed(0) + ' m<br>Last updated: ' + $.timeago(user.data.timestamp);
       return html;
     }
 

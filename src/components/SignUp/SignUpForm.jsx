@@ -19,7 +19,7 @@ var SignUpForm = React.createClass({
 
     // A bug in iOS 8 makes virtual keyboard appears and scrolls page after touch.
     // A simple solution would be to prevent autofocus at all.
-    if (!/iPad|iPhone|iPod/g.test(navigator.userAgent)) {
+    if (!/iPad|iPhone|iPod|Android/g.test(navigator.userAgent)) {
       $(usernameInputField).focus();
       $(usernameInputField).select();
     };

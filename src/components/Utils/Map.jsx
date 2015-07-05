@@ -1,6 +1,8 @@
 var React = require('react');
 var NavButtonCollection = require('./NavButtonCollection');
 
+var randomColor = require('../../lib/colors.js');
+
 var Map = React.createClass({
   getInitialState: function() {
     return { isFirstPositionLock: true };
@@ -68,8 +70,16 @@ var Map = React.createClass({
     var latlng = L.latLng(data.latitude, data.longitude);
     var radius = data.accuracy / 2;
 
-    var marker = L.marker(latlng).addTo(this.map);
-    var circle = L.circle(latlng, radius).addTo(this.map);
+    var marker = L.marker(latlng, {
+      icon: L.mapbox.marker.icon({
+        'marker-size': 'medium',
+        'marker-symbol': 'circle',
+        'marker-color': randomColor({
+           luminosity: 'dark'
+        })
+      })
+    }).addTo(this.map);
+    var circle = L.circle(latlng, radius);
 
     var self = this;
 
@@ -77,17 +87,20 @@ var Map = React.createClass({
       self.map.panTo(e.latlng);
     });
 
+    marker.on('popupopen', function(e) {
+      self.map.addLayer(circle);
+    });
+
+    marker.on('popupclose', function(e) {
+      self.map.removeLayer(circle);
+    });
+
     marker.on('dblclick', function(e) {
       self.map.setView(e.latlng, 16);
     });
 
-    marker.on('popupopen', function(e) {
-      var popupContent = self.generatePopupContent(marker.username);
-      e.popup.setContent(popupContent);
-    });
-
-    marker.bindPopup();
-    marker.username = data.username;
+    var popupContent = self.generatePopupContent(data.username);
+    marker.bindPopup(popupContent);
 
     user.marker = marker;
     user.circle = circle;
@@ -111,6 +124,9 @@ var Map = React.createClass({
     var existingCircle = user.circle;
     existingCircle.setLatLng(latlng);
     existingCircle.setRadius(radius);
+
+    var popupContent = this.generatePopupContent(data.username);
+    existingMarker.setPopupContent(popupContent);
   },
 
   removeMarker: function(user) {

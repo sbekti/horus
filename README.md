@@ -7,13 +7,23 @@ Simple web-based location sharing platform using HTML5 Geolocation API.
 
 ## How to Install
 
+Clone the repo
+
   	git clone https://github.com/sbekti/horus.git
+
+Switch to project directory
 
   	cd horus
 
+Install project dependencies
+
 	npm install
 
+Rebuild client bundle
+
 	gulp clean webpack
+
+Start server
 
   	npm start
 

@@ -22,7 +22,7 @@ var MessageList = React.createClass({
       );
     });
     return (
-      <div ref='messageList' className='message-list well'>
+      <div ref='messageList' className='message-list well well-sm'>
         {messageNodes}
       </div>
     );

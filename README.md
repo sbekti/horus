@@ -5,7 +5,7 @@ Horus
 
 Simple web-based location sharing platform using HTML5 Geolocation API.
 
-## How to install
+## How to Install
 
   	git clone https://github.com/sbekti/horus.git
 

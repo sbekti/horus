@@ -1,8 +1,6 @@
 var React = require('react');
 var NavButtonCollection = require('./NavButtonCollection');
 
-var randomColor = require('../../lib/colors.js');
-
 var Map = React.createClass({
   getInitialState: function() {
     return { isFirstPositionLock: true };
@@ -74,9 +72,7 @@ var Map = React.createClass({
       icon: L.mapbox.marker.icon({
         'marker-size': 'medium',
         'marker-symbol': 'circle',
-        'marker-color': randomColor({
-           luminosity: 'dark'
-        })
+        'marker-color': data.color
       })
     }).addTo(this.map);
     var circle = L.circle(latlng, radius);

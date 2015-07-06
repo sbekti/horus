@@ -2,6 +2,7 @@ var React = require('react');
 var Notify = require('notifyjs');
 var Howler = require('howler');
 var Polyname = require('../lib/polyname');
+var randomColor = require('../lib/colors.js');
 
 var NotificationBar = require('./Utils/NotificationBar');
 var Map = require('./Utils/Map');
@@ -40,6 +41,7 @@ var Application = React.createClass({
     }
 
     this.randomName = Polyname.generate();
+    this.color = randomColor({ luminosity: 'dark' });
   },
 
   componentDidMount: function() {
@@ -161,7 +163,8 @@ var Application = React.createClass({
       longitude: e.longitude,
       altitude: e.altitude,
       accuracy: e.accuracy,
-      altitudeAccuracy: e.altitudeAccuracy
+      altitudeAccuracy: e.altitudeAccuracy,
+      color: this.color
     }
 
     this.socket.emit('user:location', data);

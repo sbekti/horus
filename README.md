@@ -35,12 +35,13 @@ Open in browser
 
 - React
 - HTML5 Geolocation API
-- HTML5 Desktop Notification API
+- HTML5 Desktop Notifications API
 - Mapbox
 
 ## Todo
 
 - Use Flux architecture
+- Use persistent storage
 
 ## License
 

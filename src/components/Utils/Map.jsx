@@ -152,7 +152,7 @@ var Map = React.createClass({
     var you = username == this.props.username ? ' (you)' : '';
     var distance = username == this.props.username ? '' : '<br>Distance from me: ' + userLatLng.distanceTo(myLatLng).toFixed(0) + ' m';
 
-    var html = '<span class="marker-title">' + username + you + '</span>' + distance + '<br>LatLng: [' + user.data.latitude.toFixed(5) + ', ' + user.data.longitude.toFixed(5) + ']<br>Accuracy: ' + user.data.accuracy + ' m<br>Last updated: ' + $.timeago(user.data.timestamp);
+    var html = '<span class="marker-title">' + username + you + '</span>' + distance + '<br>LatLng: [' + user.data.latitude.toFixed(5) + ', ' + user.data.longitude.toFixed(5) + ']<br>Accuracy: ' + user.data.accuracy.toFixed(0) + ' m<br>Last updated: ' + $.timeago(user.data.timestamp);
     return html;
   },
 

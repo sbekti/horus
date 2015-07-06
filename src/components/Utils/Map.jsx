@@ -65,6 +65,7 @@ var Map = React.createClass({
   },
 
   addMarker: function(user, data) {
+    var self = this;
     var latlng = L.latLng(data.latitude, data.longitude);
     var radius = data.accuracy / 2;
 
@@ -75,9 +76,10 @@ var Map = React.createClass({
         'marker-color': data.color
       })
     }).addTo(this.map);
-    var circle = L.circle(latlng, radius);
 
-    var self = this;
+    var circle = L.circle(latlng, radius, {
+      stroke: false
+    });
 
     marker.on('click', function(e) {
       self.map.panTo(e.latlng);

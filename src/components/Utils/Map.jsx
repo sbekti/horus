@@ -106,11 +106,10 @@ var Map = React.createClass({
     user.circle = circle;
 
     if (this.state.isFirstPositionLock && (data.username == this.props.username)) {
+      this.zoomTo(user);
       marker.openPopup();
 
       this.setState({ isFirstPositionLock: false });
-      this.stopLocate();
-      this.locate();
     }
   },
 
@@ -148,7 +147,7 @@ var Map = React.createClass({
     // If we don't have the data yet, use the generic marker popup.
     // This is also the case if we deny sharing our location.
     if (!me) {
-      var html = '<span class="marker-title">' + username + '</span><br>LatLng: [' + user.data.latitude.toFixed(4) + ', ' + user.data.longitude.toFixed(4) + ']<br>Accuracy: ' + user.data.accuracy.toFixed(0) + ' m<br>Last updated: ' + $.timeago(user.data.timestamp);
+      var html = '<span class="marker-title">' + username + '</span><br>LatLng: [' + user.data.latitude.toFixed(5) + ', ' + user.data.longitude.toFixed(5) + ']<br>Accuracy: ' + user.data.accuracy.toFixed(0) + ' m<br>Last updated: ' + $.timeago(user.data.timestamp);
       return html;
     }
 
@@ -157,15 +156,13 @@ var Map = React.createClass({
     var you = username == this.props.username ? ' (you)' : '';
     var distance = username == this.props.username ? '' : '<br>Distance from me: ' + userLatLng.distanceTo(myLatLng).toFixed(0) + ' m';
 
-    var html = '<span class="marker-title">' + username + you + '</span>' + distance + '<br>LatLng: [' + user.data.latitude.toFixed(4) + ', ' + user.data.longitude.toFixed(4) + ']<br>Accuracy: ' + user.data.accuracy + ' m<br>Last updated: ' + $.timeago(user.data.timestamp);
+    var html = '<span class="marker-title">' + username + you + '</span>' + distance + '<br>LatLng: [' + user.data.latitude.toFixed(5) + ', ' + user.data.longitude.toFixed(5) + ']<br>Accuracy: ' + user.data.accuracy + ' m<br>Last updated: ' + $.timeago(user.data.timestamp);
     return html;
   },
 
   locate: function() {
     this.map.locate({
       watch: true,
-      setView: this.state.isFirstPositionLock,
-      maxZoom: 16,
       enableHighAccuracy: true
     });
   },

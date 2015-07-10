@@ -15,7 +15,7 @@
   "license": "MIT",
   "engines": {
     "node": "^0.12.5",
-    "npm": "^2.12.0"
+    "npm": "^2.13.0"
   },
   "dependencies": {
     "body-parser": "^1.13.1",

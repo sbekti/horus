@@ -3,7 +3,6 @@ Horus
 
 [![Join the chat at https://gitter.im/sbekti/horus](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/sbekti/horus?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-![Horus Poster](http://bekti.io/content/images/2015/07/horus-poster.jpg)
 
 A simple web-based location sharing platform using HTML5 Geolocation API.
 

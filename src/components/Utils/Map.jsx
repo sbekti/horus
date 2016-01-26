@@ -18,7 +18,7 @@ var Map = React.createClass({
     $(window).trigger('resize');
 
     // Create a map instance
-    L.mapbox.accessToken = 'pk.eyJ1IjoibWFwYm94IiwiYSI6IlhHVkZmaW8ifQ.hAMX5hSW-QnTeRCMAy9A8Q';
+    L.mapbox.accessToken = 'pk.eyJ1Ijoic2Jla3RpIiwiYSI6IjQ3NWU2ZDk4NTUyOGYwMjIyNjk5YzJhOTIwOWM1ZjE0In0.NWyuhzBr1fzqnrzSYbD0OQ';
 
     var map = this.map = L.mapbox.map(mapDiv, null, {
       center: [51.505, -0.09],
